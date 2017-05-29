@@ -11,13 +11,17 @@ def query_cpu(**_) -> t.Mapping[str, t.Any]:
     cpu = cpuinfo.get_cpu_info()
     try:
         cpu_clock = psutil.cpu_freq()
-    except NotImplementedError:
-        cpu_clock = None
+        clock_current = cpu_clock.current
+        clock_min = cpu_clock.min
+        clock_max = cpu_clock.max
+    except FileNotFoundError:
+        clock_current = None
+        clock_min = None
+        clock_max = None
     return {
         'brand': cpu["brand"],
-        #'count': cpu["count"],
         'logical_cores': psutil.cpu_count(),
         'physical_cores': psutil.cpu_count(logical=False),
-        'clock': cpu_clock.current,
-        'clock_min': cpu_clock.min,
-        'clock_max': cpu_clock.max}
+        'clock': clock_current,
+        'clock_min': clock_min,
+        'clock_max': clock_max}
