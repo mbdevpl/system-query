@@ -20,11 +20,14 @@ try:
 
     def query_cpu_clock() -> t.Tuple[t.Optional[int], t.Optional[int], t.Optional[int]]:
         """Get current, minimum and maximum clock frequency of the CPU in the system."""
+        cpu_clock = None
         try:
             cpu_clock = psutil.cpu_freq()
-            return cpu_clock.current, cpu_clock.min, cpu_clock.max
         except FileNotFoundError:
+            pass
+        if cpu_clock is None:
             return None, None, None
+        return cpu_clock.current, cpu_clock.min, cpu_clock.max
 
 
     def query_cpu_cores() -> t.Tuple[t.Optional[int], t.Optional[int]]:
