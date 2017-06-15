@@ -26,6 +26,8 @@ system_query
 
 Comprehensive and concise system information tool.
 
+It is also attempting to be fail-safe.
+
 Usable as library and as a commandline tool.
 
 
