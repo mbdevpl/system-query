@@ -56,7 +56,7 @@ install:
 
 script:
   - python -m unittest discover
-  - pip install -U -r optional_requirements.txt
+  - pip install -U -r optional_requirements_ci.txt
   - python -m unittest discover
 
 after_success:

@@ -1,0 +1,2 @@
+psutil
+#pycuda # CUDA is not available on Travis/AppVeyor
