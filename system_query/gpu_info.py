@@ -34,15 +34,15 @@ try:
     def query_gpu(device: 'cuda.Device') -> t.Mapping[str, t.Any]:
         """Get information about a given GPU."""
         attributes = device.get_attributes()
-        cuda_version = device.compute_capability()
+        compute_capability = device.compute_capability()
         multiprocessors = attributes[cuda.device_attribute.MULTIPROCESSOR_COUNT]
-        cuda_cores = calculate_cuda_cores(cuda_version, multiprocessors)
+        cuda_cores = calculate_cuda_cores(compute_capability, multiprocessors)
         try:
             return {
                 'brand': device.name(),
                 'memory': device.total_memory(),
                 'memory_clock': attributes[cuda.device_attribute.MEMORY_CLOCK_RATE],
-                'cuda_version': float('.'.join(str(_) for _ in cuda_version)),
+                'compute_capability': float('.'.join(str(_) for _ in compute_capability)),
                 'clock': attributes[cuda.device_attribute.CLOCK_RATE],
                 'multiprocessors': multiprocessors,
                 'cores': cuda_cores,
@@ -63,20 +63,20 @@ except QueryError:
         return []
 
 
-def calculate_cuda_cores(cuda_version: t.Tuple[int, int], multiprocessors: int) -> int:
+def calculate_cuda_cores(compute_capability: t.Tuple[int, int], multiprocessors: int) -> int:
     """Calculate number of cuda cores according to Nvidia's specifications."""
-    if cuda_version[0] == 2: # Fermi
-        if cuda_version[1] == 1:
+    if compute_capability[0] == 2: # Fermi
+        if compute_capability[1] == 1:
             return multiprocessors * 48
         return multiprocessors * 32
-    elif cuda_version[0] == 3: # Kepler
+    elif compute_capability[0] == 3: # Kepler
         return multiprocessors * 192
-    elif cuda_version[0] == 5: # Maxwell
+    elif compute_capability[0] == 5: # Maxwell
         return multiprocessors * 128
-    elif cuda_version[0] == 6: # Pascal
-        if cuda_version[1] == 0:
+    elif compute_capability[0] == 6: # Pascal
+        if compute_capability[1] == 0:
             return multiprocessors * 64
-        elif cuda_version[1] == 1:
+        elif compute_capability[1] == 1:
             return multiprocessors * 128
         return None
     return None

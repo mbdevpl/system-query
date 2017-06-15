@@ -64,7 +64,7 @@ For example:
      'gpus': [{'brand': 'GeForce GTX 580',
                'clock': 1544000,
                'cores': 512,
-               'cuda_version': 2.0,
+               'compute_capability': 2.0,
                'memory': 1543766016,
                'memory_clock': 2004000,
                'multiprocessors': 16,
