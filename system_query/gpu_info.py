@@ -21,6 +21,8 @@ try:
     except pycuda._driver.Error as err:
         raise QueryError('') from err
 
+    _LOG.debug('using CUDA version %s', '.'.join(str(_) for _ in cuda.get_version()))
+
 
     def query_gpus(**_) -> t.List[t.Mapping[str, t.Any]]:
         """Get information about all GPUs."""
