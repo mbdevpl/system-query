@@ -1,27 +1,58 @@
 """Functions to query system's CPUs/APUs."""
 
+import logging
 import typing as t
 
 import cpuinfo
-import psutil
+
+from .errors import QueryError
+
+_LOG = logging.getLogger(__name__)
+
+
+try:
+
+    try:
+        import psutil
+    except ImportError as err:
+        raise QueryError('unable to import psutil') from err
+
+
+    def query_cpu_clock() -> t.Tuple[t.Optional[int], t.Optional[int], t.Optional[int]]:
+        """Get current, minimum and maximum clock frequency of the CPU in the system."""
+        try:
+            cpu_clock = psutil.cpu_freq()
+            return cpu_clock.current, cpu_clock.min, cpu_clock.max
+        except FileNotFoundError:
+            return None, None, None
+
+
+    def query_cpu_cores() -> t.Tuple[t.Optional[int], t.Optional[int]]:
+        """Get number of logical and physical cores of the system's CPU."""
+        return psutil.cpu_count(), psutil.cpu_count(logical=False)
+
+
+except QueryError:
+
+    _LOG.info('proceeding without CPU clock and core count query support', exc_info=1)
+
+
+    def query_cpu_clock() -> t.Tuple[t.Optional[int], t.Optional[int], t.Optional[int]]:
+        return None, None, None
+
+    def query_cpu_cores() -> t.Tuple[t.Optional[int], t.Optional[int]]:
+        return None, None
 
 
 def query_cpu(**_) -> t.Mapping[str, t.Any]:
     """Get information about CPU present in the system."""
     cpu = cpuinfo.get_cpu_info()
-    try:
-        cpu_clock = psutil.cpu_freq()
-        clock_current = cpu_clock.current
-        clock_min = cpu_clock.min
-        clock_max = cpu_clock.max
-    except FileNotFoundError:
-        clock_current = None
-        clock_min = None
-        clock_max = None
+    clock_current, clock_min, clock_max = query_cpu_clock()
+    logical_cores, physical_cores = query_cpu_cores()
     return {
         'brand': cpu["brand"],
-        'logical_cores': psutil.cpu_count(),
-        'physical_cores': psutil.cpu_count(logical=False),
+        'logical_cores': logical_cores,
+        'physical_cores': physical_cores,
         'clock': clock_current,
         'clock_min': clock_min,
         'clock_max': clock_max}
