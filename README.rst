@@ -8,6 +8,18 @@
 system_query
 ============
 
+.. image:: https://travis-ci.org/mbdevpl/system-query.svg?branch=master
+    :target: https://travis-ci.org/mbdevpl/system-query
+    :alt: build status from Travis CI
+
+.. image:: https://ci.appveyor.com/api/projects/status/github/mbdevpl/system-query?branch=master&svg=true
+    :target: https://ci.appveyor.com/project/mbdevpl/system-query
+    :alt: build status from AppVeyor
+
+.. image:: https://coveralls.io/repos/github/mbdevpl/system-query/badge.svg?branch=master
+    :target: https://coveralls.io/github/mbdevpl/system-query
+    :alt: test coverage from Coveralls
+
 .. image:: https://img.shields.io/github/license/mbdevpl/system-query.svg
     :target: https://github.com/mbdevpl/system-query
     :alt: license
