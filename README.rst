@@ -28,6 +28,7 @@ Comprehensive and concise system information tool.
 
 Usable as library and as a commandline tool.
 
+
 as library
 ----------
 
@@ -99,3 +100,12 @@ Usage information:
 
     Copyright 2017 by Mateusz Bysiek, Apache License 2.0,
     https://github.com/mbdevpl/system-query
+
+
+requirements
+------------
+
+As defined in `<requirements.txt>`_. Reccomended (but optional) packages are listed in
+`<optional_requirements.txt>`_.
+
+Additionally, building and testing requires packages listed in `<dev_requirements.txt>`_.
