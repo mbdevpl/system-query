@@ -111,3 +111,13 @@ As defined in `<requirements.txt>`_. Reccomended (but optional) packages are lis
 `<optional_requirements.txt>`_.
 
 Additionally, building and testing requires packages listed in `<dev_requirements.txt>`_.
+
+
+contributors
+------------
+
+Aleksandr Drozd
+
+Mateusz Bysiek
+
+For licensing information, please see `<LICENSE>`_ and `<NOTICE>`_.
