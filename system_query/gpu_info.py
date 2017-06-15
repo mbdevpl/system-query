@@ -7,6 +7,7 @@ from .errors import QueryError
 
 _LOG = logging.getLogger(__name__)
 
+
 try:
 
     try:
@@ -58,7 +59,7 @@ except QueryError:
     _LOG.info('proceeding without GPU query support', exc_info=1)
 
 
-    def query_gpus(**_):
+    def query_gpus(**_) -> t.List[t.Mapping[str, t.Any]]:
         return []
 
 

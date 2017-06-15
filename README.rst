@@ -8,6 +8,10 @@
 system_query
 ============
 
+.. image:: https://img.shields.io/github/license/mbdevpl/system-query.svg
+    :target: https://github.com/mbdevpl/system-query
+    :alt: license
+
 Comprehensive and concise system information tool.
 
 Usable as library and as a commandline tool.
@@ -27,7 +31,7 @@ as library
              'logical_cores': 8,
              'physical_cores': 4}
 
-More examples in :bash:`examples.ipynb`.
+More examples in `<examples.ipynb>`_.
 
 
 as commandline tool
