@@ -100,7 +100,7 @@ Usage information:
                             stdout and stderr, respectively. (default: stdout)
       --version             show program's version number and exit
 
-    Copyright 2017 by Mateusz Bysiek, Apache License 2.0,
+    Copyright 2017 by the system-query package contributors, Apache License 2.0,
     https://github.com/mbdevpl/system-query
 
 
