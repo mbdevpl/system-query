@@ -4,7 +4,7 @@
 .. role:: python(code)
    :language: python
 
-============
+
 system_query
 ============
 
@@ -15,6 +15,10 @@ system_query
 .. image:: https://ci.appveyor.com/api/projects/status/github/mbdevpl/system-query?branch=master&svg=true
     :target: https://ci.appveyor.com/project/mbdevpl/system-query
     :alt: build status from AppVeyor
+
+.. image:: https://api.codacy.com/project/badge/Grade/b44e2fc42fcd4301bcd0fb11938a89da
+    :target: https://www.codacy.com/app/mbdevpl/system-query
+    :alt: grade from Codacy
 
 .. image:: https://codecov.io/gh/mbdevpl/system-query/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/mbdevpl/system-query
@@ -28,7 +32,7 @@ Comprehensive and concise system information tool.
 
 It is also attempting to be fail-safe.
 
-Usable as library and as a commandline tool.
+Usable as library and as a command-line tool.
 
 
 as library
@@ -49,8 +53,8 @@ as library
 More examples in `<examples.ipynb>`_.
 
 
-as commandline tool
--------------------
+as command-line tool
+--------------------
 
 For example:
 
@@ -107,7 +111,7 @@ Usage information:
 requirements
 ------------
 
-As defined in `<requirements.txt>`_. Reccomended (but optional) packages are listed in
+As defined in `<requirements.txt>`_. Recommended (but optional) packages are listed in
 `<optional_requirements.txt>`_.
 
 Additionally, building and testing requires packages listed in `<test_requirements.txt>`_.
