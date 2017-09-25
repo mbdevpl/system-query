@@ -110,7 +110,7 @@ requirements
 As defined in `<requirements.txt>`_. Reccomended (but optional) packages are listed in
 `<optional_requirements.txt>`_.
 
-Additionally, building and testing requires packages listed in `<dev_requirements.txt>`_.
+Additionally, building and testing requires packages listed in `<test_requirements.txt>`_.
 
 
 contributors
