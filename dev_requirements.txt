@@ -1,4 +1,4 @@
-coveralls
+codecov
 coverage
 pip >= 9.0
 pylint

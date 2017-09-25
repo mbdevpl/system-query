@@ -16,9 +16,9 @@ system_query
     :target: https://ci.appveyor.com/project/mbdevpl/system-query
     :alt: build status from AppVeyor
 
-.. image:: https://coveralls.io/repos/github/mbdevpl/system-query/badge.svg?branch=master
-    :target: https://coveralls.io/github/mbdevpl/system-query
-    :alt: test coverage from Coveralls
+.. image:: https://codecov.io/gh/mbdevpl/system-query/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/mbdevpl/system-query
+    :alt: test coverage from Codecov
 
 .. image:: https://img.shields.io/github/license/mbdevpl/system-query.svg
     :target: https://github.com/mbdevpl/system-query
