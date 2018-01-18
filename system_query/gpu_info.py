@@ -23,7 +23,6 @@ try:
 
     _LOG.debug('using CUDA version %s', '.'.join(str(_) for _ in cuda.get_version()))
 
-
     def query_gpus(**_) -> t.List[t.Mapping[str, t.Any]]:
         """Get information about all GPUs."""
         gpus = []
@@ -31,7 +30,6 @@ try:
             device = cuda.Device(i)
             gpus.append(query_gpu(device))
         return gpus
-
 
     def query_gpu(device: 'cuda.Device') -> t.Mapping[str, t.Any]:
         """Get information about a given GPU."""
@@ -60,25 +58,23 @@ except QueryError:
 
     _LOG.info('proceeding without GPU query support', exc_info=1)
 
-
     def query_gpus(**_) -> t.List[t.Mapping[str, t.Any]]:
         return []
 
 
 def calculate_cuda_cores(compute_capability: t.Tuple[int, int], multiprocessors: int) -> int:
     """Calculate number of cuda cores according to Nvidia's specifications."""
-    if compute_capability[0] == 2: # Fermi
+    if compute_capability[0] == 2:  # Fermi
         if compute_capability[1] == 1:
             return multiprocessors * 48
         return multiprocessors * 32
-    elif compute_capability[0] == 3: # Kepler
+    if compute_capability[0] == 3:  # Kepler
         return multiprocessors * 192
-    elif compute_capability[0] == 5: # Maxwell
+    if compute_capability[0] == 5:  # Maxwell
         return multiprocessors * 128
-    elif compute_capability[0] == 6: # Pascal
+    if compute_capability[0] == 6:  # Pascal
         if compute_capability[1] == 0:
             return multiprocessors * 64
-        elif compute_capability[1] == 1:
+        if compute_capability[1] == 1:
             return multiprocessors * 128
-        return None
     return None

@@ -17,7 +17,6 @@ try:
     except ImportError as err:
         raise QueryError('unable to import psutil') from err
 
-
     def query_cpu_clock() -> t.Tuple[t.Optional[int], t.Optional[int], t.Optional[int]]:
         """Get current, minimum and maximum clock frequency of the CPU in the system."""
         cpu_clock = None
@@ -29,7 +28,6 @@ try:
             return None, None, None
         return cpu_clock.current, cpu_clock.min, cpu_clock.max
 
-
     def query_cpu_cores() -> t.Tuple[t.Optional[int], t.Optional[int]]:
         """Get number of logical and physical cores of the system's CPU."""
         return psutil.cpu_count(), psutil.cpu_count(logical=False)
@@ -38,7 +36,6 @@ try:
 except QueryError:
 
     _LOG.info('proceeding without CPU clock and core count query support', exc_info=1)
-
 
     def query_cpu_clock() -> t.Tuple[t.Optional[int], t.Optional[int], t.Optional[int]]:
         return None, None, None

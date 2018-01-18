@@ -14,11 +14,11 @@ def query_all(**kwargs) -> t.Mapping[str, t.Any]:
     return {
         'host': query_host(),
         'os': query_os(),
-        #'software': query_software(),
+        # 'software': query_software(),
         'cpu': query_cpu(**kwargs),
         'gpus': query_gpus(**kwargs),
         'ram': query_ram(**kwargs),
-        #'hdds': query_hdd(),
+        # 'hdds': query_hdd(),
         'swap': query_swap(),
-        #'network': psutil.net_if_stats()
+        # 'network': psutil.net_if_stats()
         }

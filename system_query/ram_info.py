@@ -17,7 +17,6 @@ try:
     except ImportError as err:
         raise QueryError('unable to import psutil') from err
 
-
     def query_ram_total() -> t.Optional[int]:
         return psutil.virtual_memory().total
 
@@ -25,7 +24,6 @@ try:
 except QueryError:
 
     _LOG.info('proceeding without total RAM capacity query support', exc_info=1)
-
 
     def query_ram_total() -> t.Optional[int]:
         return None
@@ -69,7 +67,7 @@ def query_ram_bank(node: ET.Element) -> t.Mapping[str, t.Any]:
     bank_clock = node.findall('./clock')
     if len(bank_size) != 1 or len(bank_clock) != 1:
         _LOG.warning(
-            'there should be exactly one size and clock value for a bank'\
+            'there should be exactly one size and clock value for a bank'
             ' but there are %i and %i respectively', len(bank_size), len(bank_clock))
     _LOG.debug(ET.tostring(node, encoding='utf8', method='xml').decode())
     return {

@@ -14,10 +14,10 @@ import typing as t
 from .all_info import query_all
 from .cpu_info import query_cpu
 from .gpu_info import query_gpus
-#from .host_info import query_host
-#from .os_info import query_os
+# from .host_info import query_host
+# from .os_info import query_os
 from .ram_info import query_ram
-#from .swap_info import query_swap
+# from .swap_info import query_swap
 from ._version import VERSION
 
 __version__ = VERSION
