@@ -1,12 +1,16 @@
 .. role:: bash(code)
-   :language: bash
+    :language: bash
 
 .. role:: python(code)
-   :language: python
+    :language: python
 
 
 system_query
 ============
+
+.. image:: https://img.shields.io/pypi/v/system-query.svg
+    :target: https://pypi.python.org/pypi/system-query
+    :alt: package version from PyPI
 
 .. image:: https://travis-ci.org/mbdevpl/system-query.svg?branch=master
     :target: https://travis-ci.org/mbdevpl/system-query
@@ -62,27 +66,20 @@ For example:
 
     $ python3 -m system_query
     {'cpu': {'brand': 'Intel(R) Core(TM) i7-3770K CPU @ 3.50GHz',
-             'clock': 1736.1565,
+             'clock': 1725.031125,
              'clock_max': 3900.0,
              'clock_min': 1600.0,
              'logical_cores': 8,
              'physical_cores': 4},
-     'gpus': [{'brand': 'GeForce GTX 580',
-               'clock': 1544000,
-               'cores': 512,
-               'compute_capability': 2.0,
-               'memory': 1543766016,
-               'memory_clock': 2004000,
-               'multiprocessors': 16,
-               'warp_size': 32}],
+     'gpus': [],
      'host': 'mbLab',
-     'os': 'Linux-4.4.0-78-generic-x86_64-with-debian-stretch-sid',
-     'ram': {'banks': [], 'total': 33701339136},
+     'os': 'Linux-4.4.0-109-generic-x86_64-with-debian-stretch-sid',
+     'ram': {'banks': [], 'total': 33701269504},
      'swap': 0}
 
 Usage information:
 
-.. code:: bash
+.. code::
 
     $ python3 -m system_query -h
     usage: system_query [-h] [-s {all,cpu,gpu,ram}] [-f {raw,json}] [-t TARGET]
@@ -104,7 +101,7 @@ Usage information:
                             stdout and stderr, respectively. (default: stdout)
       --version             show program's version number and exit
 
-    Copyright 2017 by the system-query package contributors, Apache License 2.0,
+    Copyright 2017-2018 by the contributors, Apache License 2.0,
     https://github.com/mbdevpl/system-query
 
 

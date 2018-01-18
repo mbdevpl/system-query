@@ -10,8 +10,10 @@ class Package(setup_boilerplate.Package):
     name = 'system-query'
     description = 'comprehensive and concise system information querying tool'
     download_url = 'https://github.com/mbdevpl/system-query'
+    author = 'Aleksandr Drozd, Mateusz Bysiek'
+    maintainer = 'Mateusz Bysiek'
     classifiers = [
-        'Development Status :: 1 - Planning',
+        'Development Status :: 3 - Alpha',
         'Environment :: Console',
         'Intended Audience :: Developers',
         'Intended Audience :: Science/Research',

@@ -1,10 +1,28 @@
-/.coverage
-/.*project
+# Bintray deployment
+/travis_bintray_descriptor_gen.py
+/.bintray.json
+
+# Eclipse
 /.settings
+/.*project
+
+# Jupyter Notebook
+/.ipynb_checkpoints
+*-checkpoint.ipynb
+
+# Python
 /build
 /dist
-/examples.py
-/htmlcov
-/*.egg-info
-.ipynb_checkpoints
+/.cache
 __pycache__
+*.egg
+*.egg-info
+*.pyc
+
+# Python coverage
+/htmlcov
+/coverage.xml
+/.coverage
+
+# other
+/examples.py
