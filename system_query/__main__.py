@@ -1,6 +1,6 @@
 """This is entry point of system_query package."""
 
-from .__init__ import main
+from .main import main
 
 
 if __name__ == '__main__':
