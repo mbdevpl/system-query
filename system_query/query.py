@@ -13,7 +13,7 @@ from .ram_info import query_ram
 
 JSON_INDENT = 2
 
-ENSURE_ASCII = False
+JSON_ENSURE_ASCII = False
 
 
 def query_and_export(query_scope: str, export_format: str, export_target: t.Any, **kwargs):
@@ -49,11 +49,11 @@ def export(info, export_format: str, export_target: t.Any):
     """Export information obtained by system query to a specified format."""
     if export_format == 'json':
         if export_target in (sys.stdout, sys.stderr):
-            json_str = json.dumps(info, indent=JSON_INDENT, ensure_ascii=ENSURE_ASCII)
+            json_str = json.dumps(info, indent=JSON_INDENT, ensure_ascii=JSON_ENSURE_ASCII)
             print(json_str, file=export_target)
         elif isinstance(export_target, pathlib.Path):
             with open(export_target, 'w', encoding='utf-8') as json_file:
-                json.dump(info, json_file, indent=JSON_INDENT, ensure_ascii=ENSURE_ASCII)
+                json.dump(info, json_file, indent=JSON_INDENT, ensure_ascii=JSON_ENSURE_ASCII)
         else:
             raise NotImplementedError('format={} target={}'.format(export_format, export_target))
     elif export_format == 'raw':
