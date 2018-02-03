@@ -26,6 +26,12 @@ def query_and_export(query_scope: str, export_format: str, export_target: t.Any,
     - export_target: sys.stdout, sys.stderr, path.
     """
 
+    info = query(query_scope, **kwargs)
+    export(info, export_format, export_target)
+
+
+def query(query_scope: str, **kwargs):
+    """Wrapper around selected system query functions."""
     if query_scope == 'all':
         info = query_all(**kwargs)
     elif query_scope == 'cpu':
@@ -36,7 +42,11 @@ def query_and_export(query_scope: str, export_format: str, export_target: t.Any,
         info = query_ram(**kwargs)
     else:
         raise NotImplementedError('scope={}'.format(query_scope))
+    return info
 
+
+def export(info, export_format: str, export_target: t.Any):
+    """Export information obtained by system query to a specified format."""
     if export_format == 'json':
         if export_target in (sys.stdout, sys.stderr):
             json_str = json.dumps(info, indent=JSON_INDENT, ensure_ascii=ENSURE_ASCII)
