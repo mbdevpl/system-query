@@ -52,7 +52,7 @@ def export(info, export_format: str, export_target: t.Any):
             json_str = json.dumps(info, indent=JSON_INDENT, ensure_ascii=JSON_ENSURE_ASCII)
             print(json_str, file=export_target)
         elif isinstance(export_target, pathlib.Path):
-            with open(export_target, 'w', encoding='utf-8') as json_file:
+            with open(str(export_target), 'w', encoding='utf-8') as json_file:
                 json.dump(info, json_file, indent=JSON_INDENT, ensure_ascii=JSON_ENSURE_ASCII)
         else:
             raise NotImplementedError('format={} target={}'.format(export_format, export_target))
@@ -60,7 +60,7 @@ def export(info, export_format: str, export_target: t.Any):
         if export_target in (sys.stdout, sys.stderr):
             pprint.pprint(info, stream=export_target)
         elif isinstance(export_target, pathlib.Path):
-            with open(export_target, 'a', encoding='utf-8') as text_file:
+            with open(str(export_target), 'a', encoding='utf-8') as text_file:
                 text_file.write(str(info))
         else:
             raise NotImplementedError('format={} target={}'.format(export_format, export_target))
