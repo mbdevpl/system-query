@@ -62,6 +62,7 @@ deploy:
       secure: "S/XCFfQQPi/uY6HkJSkf5spxXojGZfABtZfA6Y+UtJdOQBbZTjSO6ZoX4tyG6OuHl2KVnyJmm3hYgoa+6JD5trrZeYye6C+iFRd6BS9sK591jYvohI4/NNOFcccN4l+LDYYZV9xZXvuTWsSjJ8a/9ngAuxK+djnSCbWb01UVH/NifmQ3x6agEWzmaOwB5KWGWJu/S3d6eL1RFN3b4seTIrhTsA/9ZK9zvaKTwOgsIDG5CpgHMxhi0YOY9/PIANtjZ+uyfk7VLsQ+Rv5sdb40aV5DuaMa6oX2CM6LZeufQQyVIU6fjpUiqIi2Wuy6vBcIjDpc9YVIBLiRlpx9KaPTlJEnoJPJZYarocjHO/yox8WbDCfNl6plXTGy/ah2Satu+LwsDq6tv6MzABqm8h+igGEkD9ZXfai2x9jODoq1L2/a1rtUkicE4+x8/3KikgGSa6dEvlmrn0Z1kL+Vh9NhOcO2mt0j14Vn8RGSv2lawWfZmomY63w2Ebq6Wxj8gm/UKCKrD6ygRPjK8QEVP3VS0gteWBYlAL+M7dJoNKaIBz5PLmhbq4L4Ya2PXyza5HVXFibbStCAOiCwie40cH51ULfKVhjEyqc3dVFEV5m9qk25CE8ohSkXiPvLH5nlvgA+MeHE6GomsCjubngSTjzoCEGYvEbt/Mws91TaxSG5X8I="
     on:
       all_branches: true
+    skip_cleanup: true
 
 notifications:
   slack:
