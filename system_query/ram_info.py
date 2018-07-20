@@ -78,3 +78,4 @@ def query_ram_bank(node: ET.Element) -> t.Mapping[str, t.Any]:
         ram_bank['clock'] = int(bank_clock[0].text)
     except IndexError:
         pass
+    return ram_bank

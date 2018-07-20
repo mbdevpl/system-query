@@ -20,4 +20,7 @@ class Tests(unittest.TestCase):
         self.assertIn('cpu', info)
         self.assertIn('ram', info)
         min_length = 1 if platform.system() == 'Linux' else 0
-        self.assertGreaterEqual(len(info.get('ram', {}).get('banks', [])), min_length)
+        ram_banks = len(info.get('ram', {}).get('banks', []))
+        self.assertGreaterEqual(ram_banks, min_length)
+        for ram_bank in ram_banks:
+            self.assertIsInstance(ram_bank, dict)
