@@ -18,4 +18,4 @@ class Tests(unittest.TestCase):
         self.assertIn('os', info)
         self.assertIn('cpu', info)
         self.assertIn('ram', info)
-        self.assertGreater(len(info.get('ram', {}).get('banks', [])), 1)
+        self.assertGreaterEqual(len(info.get('ram', {}).get('banks', [])), 1)
