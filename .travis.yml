@@ -1,4 +1,4 @@
-sudo: false
+sudo: required
 language: generic
 matrix:
   include:
@@ -42,6 +42,7 @@ script:
   - TEST_PACKAGING=1 python -m coverage run --branch --source . -m unittest --verbose
   - pip install -U -r optional_requirements_ci.txt
   - python -m coverage run --append --branch --source . -m unittest --verbose
+  - sudo python -m coverage run --append --branch --source . -m unittest --verbose test.test_with_sudo
 
 after_success:
   - python -m coverage report --show-missing
