@@ -32,9 +32,10 @@ except QueryError:
 def query_ram(sudo: bool = False, **kwargs) -> t.Mapping[str, t.Any]:
     total_ram = query_ram_total()
     ram_banks = query_ram_banks(sudo=sudo, **kwargs)
-    return {
-        'total': total_ram,
-        'banks': ram_banks}
+    ram = {'total': total_ram}
+    if ram_banks:
+        ram['banks'] = ram_banks
+    return ram
 
 
 def query_ram_banks(sudo: bool = False, **_) -> t.List[t.Mapping[str, t.Any]]:
@@ -42,6 +43,8 @@ def query_ram_banks(sudo: bool = False, **_) -> t.List[t.Mapping[str, t.Any]]:
     try:
         xml_root = parse_lshw(sudo=sudo)
     except FileNotFoundError:
+        return []
+    except ET.ParseError:
         return []
     nodes = xml_root.findall('.//node')
     _LOG.debug('%i nodes', len(nodes))

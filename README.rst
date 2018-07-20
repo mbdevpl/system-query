@@ -110,7 +110,7 @@ For example:
      'gpus': [],
      'host': 'TestMachine',
      'os': 'Linux-4.4.0-109-generic-x86_64-with-debian-stretch-sid',
-     'ram': {'banks': [], 'total': 33701269504},
+     'ram': {'total': 33701269504},
      'swap': 0}
 
 Usage information:
