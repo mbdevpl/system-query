@@ -1,1 +1,2 @@
 py-cpuinfo
+version-query

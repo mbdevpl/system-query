@@ -1,3 +1,5 @@
 """Version of system_query package."""
 
-VERSION = "0.2.0"
+from version_query import predict_version_str
+
+VERSION = predict_version_str()
