@@ -70,6 +70,8 @@ def query_ram_bank(node: ET.Element) -> t.Mapping[str, t.Any]:
             'there should be exactly one size and clock value for a bank'
             ' but there are %i and %i respectively', len(bank_size), len(bank_clock))
     _LOG.debug(ET.tostring(node, encoding='utf8', method='xml').decode())
-    return {
-        'memory': int(bank_size[0].text),
-        'clock': int(bank_clock[0].text)}
+    ram_bank = {'memory': int(bank_size[0].text)}
+    try:
+        ram_bank['clock'] = int(bank_clock[0].text)
+    except IndexError:
+        pass
