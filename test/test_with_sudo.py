@@ -2,6 +2,7 @@
 
 import collections.abc
 import getpass
+import platform
 import unittest
 
 from system_query.all_info import query_all
@@ -18,4 +19,5 @@ class Tests(unittest.TestCase):
         self.assertIn('os', info)
         self.assertIn('cpu', info)
         self.assertIn('ram', info)
-        self.assertGreaterEqual(len(info.get('ram', {}).get('banks', [])), 1)
+        min_length = 1 if platform.system() == 'Linux' else 0
+        self.assertGreaterEqual(len(info.get('ram', {}).get('banks', [])), min_length)
