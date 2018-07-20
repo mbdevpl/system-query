@@ -5,11 +5,12 @@
     :language: python
 
 
+============
 system_query
 ============
 
 .. image:: https://img.shields.io/pypi/v/system-query.svg
-    :target: https://pypi.python.org/pypi/system-query
+    :target: https://pypi.org/project/system-query
     :alt: package version from PyPI
 
 .. image:: https://travis-ci.org/mbdevpl/system-query.svg?branch=master
@@ -38,8 +39,15 @@ It is also attempting to be fail-safe.
 
 Usable as library and as a command-line tool.
 
+.. contents::
+    :backlinks: none
 
-as library
+
+Using
+=====
+
+
+As library
 ----------
 
 .. code:: python
@@ -57,7 +65,7 @@ as library
 More examples in `<examples.ipynb>`_.
 
 
-as command-line tool
+As command-line tool
 --------------------
 
 For example:
@@ -105,17 +113,21 @@ Usage information:
     https://github.com/mbdevpl/system-query
 
 
-requirements
-------------
+Requirements
+============
 
-As defined in `<requirements.txt>`_. Recommended (but optional) packages are listed in
-`<optional_requirements.txt>`_.
+Python version 3.5 or later.
 
-Additionally, building and testing requires packages listed in `<test_requirements.txt>`_.
+Python libraries as specified in `<requirements.txt>`_.
+Recommended (but optional) packages are listed in `<optional_requirements.txt>`_.
+
+Building and running tests additionally requires packages listed in `<test_requirements.txt>`_.
+
+Tested on Linux, OS X and Windows.
 
 
-contributors
-------------
+Contributors
+============
 
 Aleksandr Drozd
 
