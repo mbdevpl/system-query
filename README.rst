@@ -35,12 +35,40 @@ system_query
 
 Comprehensive and concise system information tool.
 
-It is also attempting to be fail-safe.
+The goal is to gather all relevant:
 
-Usable as library and as a command-line tool.
+*   hardware information (processors, accelerators, memory, networks, drives)
+*   static operating system information (name, version, hostname)
+*   runtime information (environment, libraries, system load, etc.)
+
+and provide them in a concise form that's both machine- and human-readable.
+
+Another important goal is to also be fail-safe, even with unexpected hardware configurations,
+low-level tool errors and deal with incomplete information.
+
+You can use *system-query* as a library and as a command-line tool.
 
 .. contents::
     :backlinks: none
+
+
+Motiviation
+===========
+
+Where am I running?
+-------------------
+
+One of the main motivations for creating *system-query* is to assist with answering the question
+"what is the actual hardware and software configuration of the system I'm using?"
+regardless of the official specification.
+
+
+How to rerun this experiment?
+-----------------------------
+
+The *system-query* was also created to assist with the computational experiment reproducibility
+and verification of results. Only if you know exactly where you ran your experiment,
+you can reason about its results and be able to reproduce them.
 
 
 Using
@@ -80,7 +108,7 @@ For example:
              'logical_cores': 8,
              'physical_cores': 4},
      'gpus': [],
-     'host': 'mbLab',
+     'host': 'TestMachine',
      'os': 'Linux-4.4.0-109-generic-x86_64-with-debian-stretch-sid',
      'ram': {'banks': [], 'total': 33701269504},
      'swap': 0}
