@@ -28,7 +28,7 @@ test_script:
   - set TEST_PACKAGING=1
   - python -m coverage run --branch --source . -m unittest --verbose
   - pip install -U -r optional_requirements_ci.txt
-  - setx TEST_PACKAGING
+  - set TEST_PACKAGING=
   - python -m coverage run --append --branch --source . -m unittest --verbose
 
 after_test:
