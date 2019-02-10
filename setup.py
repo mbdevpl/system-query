@@ -31,8 +31,12 @@ class Package(setup_boilerplate.Package):
         ]
     keywords = ['system', 'software', 'hardware']
     extras_require = {
+        'all': ['psutil', 'pycuda', 'pyudev'],
+        'cpu': ['psutil'],
         'gpu': ['pycuda'],
-        'hdd': ['pyudev']}
+        'hdd': ['pyudev'],
+        'ram': ['psutil'],
+        'swap': ['psutil']}
 
 
 if __name__ == '__main__':

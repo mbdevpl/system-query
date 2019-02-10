@@ -74,6 +74,13 @@ you can reason about its results and be able to reproduce them.
 Using
 =====
 
+Installing *system-query* doesn't enable all the features by default. Some of the query functions
+will work only on **some** systems. To attempt installation with all features enables,
+run :bash:`pip3 install system-query[all]`. If something brakes, you can narrow down the features
+by typing a feature scope instead of :bash:`all`.
+You can choose from :bash:`cpu`, :bash:`gpu`, :bash:`hdd`, :bash:`ram` and :bash:`swap`.
+E.g. :bash:`pip3 install system-query[gpu]`.
+
 
 As library
 ----------
@@ -91,6 +98,44 @@ As library
              'physical_cores': 4}
 
 More examples in `<examples.ipynb>`_.
+
+
+system_query.query_all()
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+This will launch all below functions and assemble results into a dictionary.
+
+
+system_query.query_cpu()
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+To be able to see details like clock speed and core counts, install Python package :bash:`psutil`.
+
+
+system_query.query_gpu()
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+To be able to see GPUs in the system, make sure you have CUDA installed
+and install Python package :bash:`pycuda`.
+
+
+system_query.query_hdd()
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+To be able to see HDDs in the system, make sure you have libudev installed
+and install Python package :bash:`pyudev`.
+
+
+system_query.query_ram()
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+To be able to see amount of memory, install Python package :bash:`psutil`.
+
+
+system_query.query_swap()
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To be able to see amount of swap space, install Python package :bash:`psutil`.
 
 
 As command-line tool
@@ -152,6 +197,12 @@ Recommended (but optional) packages are listed in `<optional_requirements.txt>`_
 Building and running tests additionally requires packages listed in `<test_requirements.txt>`_.
 
 Tested on Linux, OS X and Windows.
+
+Additionally, for all features to work you should have the following libraries
+installed in your system:
+
+*   CUDA
+*   libudev
 
 
 Contributors
