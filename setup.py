@@ -30,7 +30,9 @@ class Package(setup_boilerplate.Package):
         'Topic :: Utilities'
         ]
     keywords = ['system', 'software', 'hardware']
-    extras_require = {'gpu': ['pycuda']}
+    extras_require = {
+        'gpu': ['pycuda'],
+        'hdd': ['pyudev']}
 
 
 if __name__ == '__main__':
