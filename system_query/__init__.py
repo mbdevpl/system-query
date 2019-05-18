@@ -11,3 +11,5 @@ from .ram_info import query_ram
 from .query import query_and_export
 
 __version__ = VERSION
+
+__all__ = ['query_all', 'query_cpu', 'query_gpus', 'query_ram', 'query_and_export']
