@@ -60,5 +60,12 @@ pipeline {
         sh "codecov --build \"${NODE_NAME} ${BUILD_DISPLAY_NAME}\" --token \"${CODECOV_TOKEN}\""
       }
     }
+    stage('Arm') {
+      agent { label 'arm' }
+      steps {
+        sh "python3 -m coverage run --branch --source . -m unittest -v"
+        sh "codecov --build \"${NODE_NAME} ${BUILD_DISPLAY_NAME}\" --token \"${CODECOV_TOKEN}\""
+      }
+    }
   } } }
 }
