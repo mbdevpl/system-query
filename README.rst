@@ -132,6 +132,13 @@ system_query.query_ram()
 To be able to see amount of memory, install Python package :bash:`psutil`.
 
 
+system_query.query_software()
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This will attempt to gather version information of various common programs,
+assuming their executables are in system path.
+
+
 system_query.query_swap()
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
