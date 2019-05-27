@@ -44,7 +44,7 @@ def query_cpu(**_) -> t.Mapping[str, t.Any]:
     clock_current, clock_min, clock_max = query_cpu_clock()
     logical_cores, physical_cores = query_cpu_cores()
     return {
-        'brand': cpu["brand"],
+        'brand': cpu.get('brand', None),
         'logical_cores': logical_cores,
         'physical_cores': physical_cores,
         'clock': clock_current,
