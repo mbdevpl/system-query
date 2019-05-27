@@ -8,6 +8,8 @@ from .errors import QueryError
 
 _LOG = logging.getLogger(__name__)
 
+IGNORED_DEVICE_PATHS = {'/dm', '/loop', '/md'}
+
 
 try:
 
@@ -21,7 +23,7 @@ try:
         context = pyudev.Context()
         hdds = {}
         for device in context.list_devices(subsystem='block', DEVTYPE='disk'):
-            if 'loop' in device.device_path or 'md' in device.device_path:
+            if any(_ in device.device_path for _ in IGNORED_DEVICE_PATHS):
                 continue
             hdd = {'size': device.attributes.asint('size')}
             for device_ in itertools.chain([device], device.ancestors):
