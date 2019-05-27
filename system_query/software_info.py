@@ -56,6 +56,8 @@ def _run_version_query(cmd, **kwargs) -> str:
         return None
     except subprocess.CalledProcessError:
         return None
+    except FileNotFoundError:  # on Windows
+        return None
     version_raw = result.stdout.decode()
     if not version_raw:
         version_raw = result.stderr.decode()
