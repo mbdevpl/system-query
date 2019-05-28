@@ -48,3 +48,5 @@ except ImportError:
 HDD = pyudev is not None
 
 RAM_TOTAL = psutil is not None
+
+SWAP = psutil is not None
