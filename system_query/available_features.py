@@ -23,3 +23,12 @@ except ImportError:
 
 CPU_CLOCK = psutil is not None
 CPU_CORES = psutil is not None
+
+try:
+    import pyudev
+    pyudev.Context()
+except ImportError:
+    pyudev = None
+    _LOG.info("unable to import package pyudev", exc_info=1)
+
+HDD = pyudev is not None
