@@ -5,28 +5,15 @@ import subprocess
 import typing as t
 from xml.etree import ElementTree as ET
 
-from .errors import QueryError
+from .available_features import psutil, RAM_TOTAL
 
 _LOG = logging.getLogger(__name__)
 
 
-try:
-
-    try:
-        import psutil
-    except ImportError as err:
-        raise QueryError('unable to import psutil') from err
-
-    def query_ram_total() -> t.Optional[int]:
-        return psutil.virtual_memory().total
-
-
-except QueryError:
-
-    _LOG.info('proceeding without total RAM capacity query support', exc_info=1)
-
-    def query_ram_total() -> t.Optional[int]:
+def query_ram_total() -> t.Optional[int]:
+    if not RAM_TOTAL:
         return None
+    return psutil.virtual_memory().total
 
 
 def query_ram(sudo: bool = False, **kwargs) -> t.Mapping[str, t.Any]:

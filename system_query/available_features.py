@@ -46,3 +46,5 @@ except ImportError:
     _LOG.info("unable to import package pyudev", exc_info=1)
 
 HDD = pyudev is not None
+
+RAM_TOTAL = psutil is not None
