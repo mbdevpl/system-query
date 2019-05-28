@@ -18,8 +18,8 @@ CPU = cpuinfo is not None
 try:
     import psutil
 except ImportError:
-    _LOG.info("unable to import package psutil", exc_info=1)
     psutil = None
+    _LOG.info("unable to import package psutil", exc_info=1)
 
 CPU_CLOCK = psutil is not None
 CPU_CORES = psutil is not None
