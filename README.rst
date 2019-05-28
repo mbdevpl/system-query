@@ -189,7 +189,7 @@ Usage information:
                             stdout and stderr, respectively. (default: stdout)
       --version             show program's version number and exit
 
-    Copyright 2017-2018 by the contributors, Apache License 2.0,
+    Copyright 2017-2019 by the contributors, Apache License 2.0,
     https://github.com/mbdevpl/system-query
 
 
