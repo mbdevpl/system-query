@@ -39,7 +39,7 @@ install:
 
 script:
   - TEST_PACKAGING=1 python -m coverage run --branch --source . -m unittest --verbose
-  - pip install -U -r optional_requirements_ci.txt
+  - pip install -U -r optional_requirements.txt
   - python -m coverage run --append --branch --source . -m unittest --verbose
   - sudo $(which python) -m coverage run --append --branch --source . -m unittest --verbose test.test_with_sudo
 

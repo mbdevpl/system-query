@@ -1,4 +1,0 @@
-psutil
-py-cpuinfo
-#pycuda # CUDA is not available on Travis/AppVeyor
-pyudev

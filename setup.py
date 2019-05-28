@@ -32,9 +32,9 @@ class Package(setup_boilerplate.Package):
         ]
     keywords = ['system', 'software', 'hardware']
     extras_require = {
-        'all': ['psutil', 'py-cpuinfo', 'pycuda', 'pyudev'],
+        'all': ['gputil', 'psutil', 'py-cpuinfo', 'pyudev'],
         'cpu': ['psutil', 'py-cpuinfo'],
-        'gpu': ['pycuda'],
+        'gpu': ['gputil'],
         'hdd': ['pyudev'],
         'ram': ['psutil'],
         'swap': ['psutil']}

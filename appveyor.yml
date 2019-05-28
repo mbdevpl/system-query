@@ -32,7 +32,7 @@ build: off
 
 test_script:
   - python -m coverage run --branch --source . -m unittest --verbose
-  - pip install -U -r optional_requirements_ci.txt
+  - pip install -U -r optional_requirements.txt
   - set TEST_PACKAGING=1
   - python -m coverage run --append --branch --source . -m unittest --verbose
 
