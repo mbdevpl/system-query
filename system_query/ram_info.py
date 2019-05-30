@@ -29,6 +29,10 @@ def query_ram_banks(sudo: bool = False, **_) -> t.List[t.Mapping[str, t.Any]]:
     """Extract information about RAM dice installed in the system."""
     try:
         xml_root = parse_lshw(sudo=sudo)
+    except subprocess.TimeoutExpired:
+        return []
+    except subprocess.CalledProcessError:
+        return []
     except FileNotFoundError:
         return []
     except ET.ParseError:
@@ -47,7 +51,7 @@ def query_ram_banks(sudo: bool = False, **_) -> t.List[t.Mapping[str, t.Any]]:
 
 def parse_lshw(sudo: bool = False):
     cmd = (['sudo'] if sudo else []) + ['lshw', '-xml', '-quiet']
-    result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    result = subprocess.run(cmd, timeout=5, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     return ET.fromstring(result.stdout.decode())
 
 
