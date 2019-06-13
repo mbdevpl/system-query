@@ -34,7 +34,7 @@ def _get_cache_size(level: int, cpuinfo_data: dict) -> t.Optional[int]:
         'l{}_data_cache_size'.format(level), cpuinfo_data.get('l{}_cache_size'.format(level), None))
     if raw_value is None:
         return None
-    assert raw_value.endswith(' KB')
+    assert raw_value.endswith(' KB'), raw_value
     return int(raw_value.replace(' KB', '')) * 1024
 
 
