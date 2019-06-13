@@ -29,13 +29,19 @@ def query_cpu_cores() -> t.Tuple[t.Optional[int], t.Optional[int]]:
     return psutil.cpu_count(), psutil.cpu_count(logical=False)
 
 
-# _LOG.info('proceeding without CPU clock and core count query support', exc_info=1)
-#
-# def query_cpu_clock() -> t.Tuple[t.Optional[int], t.Optional[int], t.Optional[int]]:
-#     return None, None, None
-#
-# def query_cpu_cores() -> t.Tuple[t.Optional[int], t.Optional[int]]:
-#     return None, None
+def _get_cache_size(level: int, cpuinfo_data: dict) -> t.Optional[int]:
+    raw_value = cpuinfo_data.get(
+        'l{}_data_cache_size'.format(level), cpuinfo_data.get('l{}_cache_size'.format(level), None))
+    if raw_value is None:
+        return None
+    assert isinstance(raw_value, str), (type(raw_value), raw_value)
+    if raw_value.endswith(' KB'):
+        raw_value = raw_value.replace(' KB', '')
+    return int(raw_value) * 1024
+
+
+def _get_cache_sizes(cpuinfo_data: dict) -> t.Mapping[int, t.Optional[int]]:
+    return {lvl: _get_cache_size(lvl, cpuinfo_data) for lvl in range(1, 4)}
 
 
 def query_cpu(**_) -> t.Mapping[str, t.Any]:
@@ -45,10 +51,12 @@ def query_cpu(**_) -> t.Mapping[str, t.Any]:
     cpu = cpuinfo.get_cpu_info()
     clock_current, clock_min, clock_max = query_cpu_clock()
     logical_cores, physical_cores = query_cpu_cores()
+    cache = _get_cache_sizes(cpu)
     return {
         'brand': cpu.get('brand', None),
         'logical_cores': logical_cores,
         'physical_cores': physical_cores,
         'clock': clock_current,
         'clock_min': clock_min,
-        'clock_max': clock_max}
+        'clock_max': clock_max,
+        'cache': cache}
