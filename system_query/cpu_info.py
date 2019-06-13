@@ -17,6 +17,8 @@ def query_cpu_clock() -> t.Tuple[t.Optional[int], t.Optional[int], t.Optional[in
         cpu_clock = psutil.cpu_freq()
     except FileNotFoundError:
         return None, None, None
+    if cpu_clock is None:
+        return None, None, None
     return cpu_clock.current, cpu_clock.min, cpu_clock.max
 
 
