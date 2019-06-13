@@ -1,5 +1,9 @@
 sudo: required
 language: generic
+addons:
+  homebrew:
+    packages:
+      - pyenv
 matrix:
   include:
     - os: linux
@@ -15,33 +19,26 @@ matrix:
       python: "3.7"
     - os: osx
       language: generic
-      env: TRAVIS_PYTHON_VERSION="3.5.6"
+      env: TRAVIS_PYTHON_VERSION="3.5"
     - os: osx
       language: generic
-      env: TRAVIS_PYTHON_VERSION="3.6.8"
+      env: TRAVIS_PYTHON_VERSION="3.6"
     - os: osx
       language: generic
-      env: TRAVIS_PYTHON_VERSION="3.7.2"
+      env: TRAVIS_PYTHON_VERSION="3.7"
 
-before_install: |
-  set -e
-  if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
-    brew update
-    brew install pyenv || brew upgrade pyenv
-    pyenv install "${TRAVIS_PYTHON_VERSION}"
-    export PATH="$HOME/.pyenv/versions/${TRAVIS_PYTHON_VERSION}/bin:${PATH}"
-  fi
-  set +e
+before_install:
+  - .build/install_pyenv.sh
 
 install:
   - pip install -U pip
   - pip install -U -r dev_requirements.txt
 
 script:
-  - TEST_PACKAGING=1 python -m coverage run --branch --source . -m unittest --verbose
+  - TEST_PACKAGING=1 python -m coverage run --branch --source . -m unittest -v
   - pip install -U -r optional_requirements_ci.txt
-  - python -m coverage run --append --branch --source . -m unittest --verbose
-  - sudo $(which python) -m coverage run --append --branch --source . -m unittest --verbose test.test_with_sudo
+  - python -m coverage run --append --branch --source . -m unittest -v
+  - sudo $(which python) -m coverage run --append --branch --source . -m unittest -v test.test_with_sudo
 
 after_success:
   - python -m coverage report --show-missing
