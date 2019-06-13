@@ -1,4 +1,4 @@
-"""This is setup.py file for system_query package."""
+"""Setup script for system_query package."""
 
 import setup_boilerplate
 
@@ -9,7 +9,7 @@ class Package(setup_boilerplate.Package):
 
     name = 'system-query'
     description = 'comprehensive and concise system information querying tool'
-    download_url = 'https://github.com/mbdevpl/system-query'
+    url = 'https://github.com/mbdevpl/system-query'
     author = 'Aleksandr Drozd, Mateusz Bysiek'
     maintainer = 'Mateusz Bysiek'
     classifiers = [
