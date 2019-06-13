@@ -34,8 +34,10 @@ def _get_cache_size(level: int, cpuinfo_data: dict) -> t.Optional[int]:
         'l{}_data_cache_size'.format(level), cpuinfo_data.get('l{}_cache_size'.format(level), None))
     if raw_value is None:
         return None
-    assert raw_value.endswith(' KB'), raw_value
-    return int(raw_value.replace(' KB', '')) * 1024
+    assert isinstance(raw_value, str), (type(raw_value), raw_value)
+    if raw_value.endswith(' KB'):
+        raw_value = raw_value.replace(' KB', '')
+    return int(raw_value) * 1024
 
 
 def _get_cache_sizes(cpuinfo_data: dict) -> t.Mapping[int, t.Optional[int]]:
