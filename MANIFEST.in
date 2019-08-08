@@ -4,3 +4,4 @@ include test_requirements.txt
 include dev_requirements.txt
 include LICENSE
 include NOTICE
+include ./*/py.typed
