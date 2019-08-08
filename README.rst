@@ -9,6 +9,8 @@
 system_query
 ============
 
+Comprehensive and concise system information tool.
+
 .. image:: https://img.shields.io/pypi/v/system-query.svg
     :target: https://pypi.org/project/system-query
     :alt: package version from PyPI
@@ -32,8 +34,6 @@ system_query
 .. image:: https://img.shields.io/github/license/mbdevpl/system-query.svg
     :target: https://github.com/mbdevpl/system-query/blob/master/NOTICE
     :alt: license
-
-Comprehensive and concise system information tool.
 
 The goal is to gather all relevant:
 
