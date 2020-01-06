@@ -38,9 +38,12 @@ def _get_cache_size(level: int, cpuinfo_data: dict) -> t.Optional[int]:
     if raw_value is None:
         return None
     assert isinstance(raw_value, str), (type(raw_value), raw_value)
+    # KB, MB: "this practice frequently leads to confusion and is deprecated"
+    # see https://en.wikipedia.org/wiki/JEDEC_memory_standards
     if raw_value.endswith('KB'):
-        # work around people's stupidity
-        raw_value = raw_value[:-2] + 'kB'
+        raw_value = raw_value[:-2] + 'KiB'
+    elif raw_value.endswith('MB'):
+        raw_value = raw_value[:-2] + 'MiB'
     ureg = pint.UnitRegistry()
     value = ureg(raw_value)
     if isinstance(value, int):
