@@ -13,7 +13,13 @@ except Exception:
     cpuinfo = None
     _LOG.info("package cpuinfo doesn't work on this system", exc_info=1)
 
-CPU = cpuinfo is not None
+try:
+    import pint
+except ImportError:
+    pint = None
+    _LOG.info("unable to import package pint", exc_info=1)
+
+CPU = cpuinfo is not None and pint is not None
 
 try:
     import psutil

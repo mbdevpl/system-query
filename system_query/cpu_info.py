@@ -3,8 +3,7 @@
 import logging
 import typing as t
 
-from .available_features import cpuinfo, psutil, CPU, CPU_CLOCK, CPU_CORES
-# from .errors import QueryError
+from .available_features import cpuinfo, pint, psutil, CPU, CPU_CLOCK, CPU_CORES
 
 _LOG = logging.getLogger(__name__)
 
@@ -30,14 +29,25 @@ def query_cpu_cores() -> t.Tuple[t.Optional[int], t.Optional[int]]:
 
 
 def _get_cache_size(level: int, cpuinfo_data: dict) -> t.Optional[int]:
+    """Get CPU cache size in bytes at a given level.
+
+    If no units are provided, assume source data is in KiB.
+    """
     raw_value = cpuinfo_data.get(
         'l{}_data_cache_size'.format(level), cpuinfo_data.get('l{}_cache_size'.format(level), None))
     if raw_value is None:
         return None
     assert isinstance(raw_value, str), (type(raw_value), raw_value)
-    if raw_value.endswith(' KB'):
-        raw_value = raw_value.replace(' KB', '')
-    return int(raw_value) * 1024
+    if raw_value.endswith('KB'):
+        # work around people's stupidity
+        raw_value = raw_value[:-2] + 'kB'
+    ureg = pint.UnitRegistry()
+    value = ureg(raw_value)
+    if isinstance(value, int):
+        return value * 1024
+    _LOG.debug('L%i cache size parsed by pint: "%s" -> %s', level, raw_value, value)
+    value = value.to('bytes')
+    return int(value.magnitude)
 
 
 def _get_cache_sizes(cpuinfo_data: dict) -> t.Mapping[int, t.Optional[int]]:
