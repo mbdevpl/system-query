@@ -15,8 +15,8 @@ Comprehensive and concise system information tool.
     :target: https://pypi.org/project/system-query
     :alt: package version from PyPI
 
-.. image:: https://travis-ci.org/mbdevpl/system-query.svg?branch=master
-    :target: https://travis-ci.org/mbdevpl/system-query
+.. image:: https://travis-ci.com/mbdevpl/system-query.svg?branch=master
+    :target: https://travis-ci.com/mbdevpl/system-query
     :alt: build status from Travis CI
 
 .. image:: https://ci.appveyor.com/api/projects/status/github/mbdevpl/system-query?branch=master&svg=true
