@@ -1,3 +1,4 @@
+pint
 psutil
 py-cpuinfo
 pycuda
