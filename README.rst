@@ -79,7 +79,8 @@ will work only on **some** systems. To attempt installation with all features en
 run :bash:`pip3 install system-query[all]`. If something brakes, you can narrow down the features
 by typing a feature scope instead of :bash:`all`.
 You can choose from :bash:`cpu`, :bash:`gpu`, :bash:`hdd`, :bash:`ram` and :bash:`swap`.
-E.g. :bash:`pip3 install system-query[gpu]`.
+E.g. :bash:`pip3 install system-query[gpu]`. You can also select more than one feature
+at the same time, e.g. :bash:`pip3 install system-query[cpu,hdd,ram]`.
 
 
 As library
@@ -109,7 +110,8 @@ This will launch all below functions and assemble results into a dictionary.
 system_query.query_cpu()
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-To be able to see details like clock speed and core counts, install Python package :bash:`psutil`.
+To be able to see details like cache size, clock speed and core counts,
+install Python packages :bash:`pint` and :bash:`psutil`.
 
 
 system_query.query_gpu()
