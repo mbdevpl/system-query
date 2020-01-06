@@ -32,12 +32,12 @@ class Package(setup_boilerplate.Package):
         ]
     keywords = ['system', 'software', 'hardware']
     extras_require = {
-        'all': ['pint', 'psutil', 'py-cpuinfo', 'pycuda', 'pyudev'],
-        'cpu': ['pint', 'psutil', 'py-cpuinfo'],
+        'all': ['pint >= 0.9, == 0.9.*', 'psutil ~= 5.6', 'py-cpuinfo == 5.*', 'pycuda', 'pyudev'],
+        'cpu': ['pint >= 0.9, == 0.9.*', 'psutil ~= 5.6', 'py-cpuinfo == 5.*'],
         'gpu': ['pycuda'],
         'hdd': ['pyudev'],
-        'ram': ['psutil'],
-        'swap': ['psutil']}
+        'ram': ['psutil ~= 5.6'],
+        'swap': ['psutil ~= 5.6']}
 
 
 if __name__ == '__main__':
