@@ -7,7 +7,7 @@ class Package(setup_boilerplate.Package):
     """Package metadata."""
 
     name = 'system-query'
-    description = 'comprehensive and concise system information querying tool'
+    description = 'Comprehensive and concise system information querying tool.'
     url = 'https://github.com/mbdevpl/system-query'
     author = 'Aleksandr Drozd, Mateusz Bysiek'
     maintainer = 'Mateusz Bysiek'
@@ -25,10 +25,12 @@ class Package(setup_boilerplate.Package):
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3 :: Only',
-        'Topic :: Education',
-        'Topic :: Scientific/Engineering',
-        'Topic :: Utilities'
-        ]
+        'Topic :: System :: Hardware',
+        'Topic :: System :: Monitoring',
+        'Topic :: System :: Operating System',
+        'Topic :: System :: Systems Administration',
+        'Topic :: Utilities',
+        'Typing :: Typed']
     keywords = ['system', 'software', 'hardware']
     extras_require = {
         'all': ['pint ~= 0.10.1', 'psutil ~= 5.6', 'py-cpuinfo == 5.*', 'pycuda >= 2019.1',

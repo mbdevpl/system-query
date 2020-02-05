@@ -9,7 +9,7 @@
 system_query
 ============
 
-Comprehensive and concise system information tool.
+Comprehensive and concise system information querying tool.
 
 .. image:: https://img.shields.io/pypi/v/system-query.svg
     :target: https://pypi.org/project/system-query
