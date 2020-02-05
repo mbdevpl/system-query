@@ -1,6 +1,8 @@
 """Command-line interface of system_query package."""
 
 import argparse
+import logging
+import os
 import pathlib
 import sys
 
@@ -13,6 +15,10 @@ def main(args=None, namespace=None):
 
     Execute query_and_export() function according to the arguments.
     """
+    logging_level = getattr(logging, os.environ.get('LOGGING_LEVEL', 'warning').upper())
+    logging.basicConfig(level=min(logging_level, logging.WARNING))
+    logging.getLogger().setLevel(logging.WARNING)
+    logging.getLogger('system_query').setLevel(logging_level)
     parser = argparse.ArgumentParser(
         prog='system_query', description='''Comprehensive and concise system information tool.
         Query a given hardware and/or softawre scope of your system and get results in human-
