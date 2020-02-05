@@ -9,11 +9,12 @@ from .query import query_and_export
 
 
 def main(args=None, namespace=None):
-    """Parse command line arguments and execute query_and_export() function according to them."""
+    """Run the command-line interface.
 
-    program_name = 'system_query'
+    Execute query_and_export() function according to the arguments.
+    """
     parser = argparse.ArgumentParser(
-        prog=program_name, description='''Comprehensive and concise system information tool.
+        prog='system_query', description='''Comprehensive and concise system information tool.
         Query a given hardware and/or softawre scope of your system and get results in human-
         and machine-readable formats.''',
         epilog='''Copyright 2017-2020 by the contributors, Apache License 2.0,
@@ -31,7 +32,7 @@ def main(args=None, namespace=None):
         and "stderr" to write to stdout and stderr, respectively.''')
     parser.add_argument(
         '--version', action='version',
-        version='{} {},\nPython {}'.format(program_name, VERSION, sys.version))
+        version=f'{parser.prog} {VERSION},\nPython {sys.version}')
 
     args = parser.parse_args(args=args, namespace=namespace)
     target = {
