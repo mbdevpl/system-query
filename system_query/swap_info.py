@@ -6,6 +6,7 @@ from .available_features import psutil, SWAP
 
 
 def query_swap() -> t.Optional[int]:
+    """Get information about swap."""
     if not SWAP:
         return None
     total_swap = psutil.swap_memory().total

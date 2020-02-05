@@ -41,7 +41,8 @@ def query_gpu(device: 'cuda.Device') -> t.Mapping[str, t.Any]:
             .format(device.get_attributes())) from err
 
 
-def calculate_cuda_cores(compute_capability: t.Tuple[int, int], multiprocessors: int) -> int:
+def calculate_cuda_cores(compute_capability: t.Tuple[int, int],
+                         multiprocessors: int) -> t.Optional[int]:
     """Calculate number of cuda cores according to Nvidia's specifications."""
     if compute_capability[0] == 2:  # Fermi
         if compute_capability[1] == 1:

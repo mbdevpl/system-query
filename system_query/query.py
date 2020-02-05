@@ -25,13 +25,13 @@ def query_and_export(query_scope: str, export_format: str, export_target: t.Any,
     - export_format: json, raw.
     - export_target: sys.stdout, sys.stderr, path.
     """
-
     info = query(query_scope, **kwargs)
     export(info, export_format, export_target)
 
 
-def query(query_scope: str, **kwargs):
-    """Wrapper around selected system query functions."""
+def query(query_scope: str, **kwargs) -> t.Any:
+    """Wrap around selected system query functions."""
+    info: t.Any
     if query_scope == 'all':
         info = query_all(**kwargs)
     elif query_scope == 'cpu':

@@ -13,6 +13,7 @@ from .swap_info import query_swap
 
 
 def query_all(**kwargs) -> t.Mapping[str, t.Any]:
+    """Get all available information about the system."""
     return {
         'host': query_host(),
         'os': query_os(),

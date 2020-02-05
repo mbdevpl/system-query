@@ -1,8 +1,9 @@
-
+"""Functions to query presence of relevant software."""
 
 import logging
 import shutil
 import subprocess
+import typing as t
 
 _LOG = logging.getLogger(__name__)
 
@@ -48,7 +49,7 @@ PYTHON_PACKAGES = [
     'pandas', 'pycuda', 'pyopencl', 'scikit-learn', 'scipy', 'tensorflow']
 
 
-def _run_version_query(cmd, **kwargs) -> str:
+def _run_version_query(cmd, **kwargs) -> t.Optional[str]:
     try:
         result = subprocess.run(
             cmd, timeout=5, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, **kwargs)
@@ -69,6 +70,7 @@ def _run_version_query(cmd, **kwargs) -> str:
 
 
 def query_software():
+    """Get information about relevant software."""
     software_info = {}
     for program, flag in VERSION_QUERY_FLAGS.items():
         path = shutil.which(program)

@@ -2,5 +2,4 @@
 
 
 class QueryError(RuntimeError):
-
-    pass
+    """Indicate that a query failed."""

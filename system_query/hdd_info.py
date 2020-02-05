@@ -12,6 +12,7 @@ IGNORED_DEVICE_PATHS = {'/dm', '/loop', '/md'}
 
 
 def query_hdd() -> t.Dict[str, dict]:
+    """Get information about all hard drives."""
     if not HDD:
         return {}
     context = pyudev.Context()
