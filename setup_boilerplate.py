@@ -12,9 +12,12 @@ import runpy
 import sys
 import typing as t
 
+import docutils.nodes
+import docutils.parsers.rst
+import docutils.utils
 import setuptools
 
-__updated__ = '2019-06-04'
+__updated__ = '2020-02-05'
 
 SETUP_TEMPLATE = '''"""Setup script."""
 
@@ -30,7 +33,6 @@ class Package(setup_boilerplate.Package):
     url = 'https://github.com/mbdevpl/...'
     classifiers = [
         'Development Status :: 1 - Planning',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
@@ -53,7 +55,7 @@ def find_version(
     To avoid importing whole package only to read the version, just module containing the version
     is imported. Therefore relative imports in that module will break the setup.
     """
-    version_module_path = '{}/{}.py'.format(package_name.replace('-', '_'), version_module_name)
+    version_module_path = f'{package_name.replace("-", "_")}/{version_module_name}.py'
     version_module_vars = runpy.run_path(version_module_path)
     return version_module_vars[version_variable_name]
 
@@ -82,9 +84,10 @@ def parse_requirements(
 
 def partition_version_classifiers(
         classifiers: t.Sequence[str], version_prefix: str = 'Programming Language :: Python :: ',
-        only_suffix: str = ' :: Only') -> t.Tuple[t.List[str], t.List[str]]:
+        only_suffix: str = ' :: Only') -> t.Tuple[t.List[t.Sequence[int]], t.List[t.Sequence[int]]]:
     """Find version number classifiers in given list and partition them into 2 groups."""
-    versions_min, versions_only = [], []
+    versions_min: t.List[t.Sequence[int]] = []
+    versions_only: t.List[t.Sequence[int]] = []
     for classifier in classifiers:
         version = classifier.replace(version_prefix, '')
         versions = versions_min
@@ -105,16 +108,14 @@ def find_required_python_version(
     versions_min, versions_only = partition_version_classifiers(
         classifiers, version_prefix, only_suffix)
     if len(versions_only) > 1:
-        raise ValueError(
-            'more than one "{}" version encountered in {}'.format(only_suffix, versions_only))
+        raise ValueError(f'more than one "{only_suffix}" version encountered in {versions_only}')
     only_version = None
     if len(versions_only) == 1:
         only_version = versions_only[0]
         for version in versions_min:
             if version[:len(only_version)] != only_version:
-                raise ValueError(
-                    'the "{}" version {} is inconsistent with version {}'
-                    .format(only_suffix, only_version, version))
+                raise ValueError(f'the "{only_suffix}" version {only_version}'
+                                 f' is inconsistent with version {version}')
     min_supported_version = None
     for version in versions_min:
         if min_supported_version is None or \
@@ -128,70 +129,84 @@ def find_required_python_version(
     return None
 
 
-def resolve_relative_rst_links(text: str, base_link: str):
-    """Resolve all relative links in a given RST document.
+def parse_rst(text: str) -> docutils.nodes.document:
+    """Parse text assuming it's an RST markup."""
+    parser = docutils.parsers.rst.Parser()
+    components = (docutils.parsers.rst.Parser,)
+    settings = docutils.frontend.OptionParser(components=components).get_default_values()
+    document = docutils.utils.new_document('<rst-doc>', settings=settings)
+    parser.parse(text, document)
+    return document
+
+
+class RelativeRefFinder(docutils.nodes.NodeVisitor):
+    """Find all relative references in a given docutils document that point to existing files."""
+
+    def __init__(self, root_dir: pathlib.Path, *args, **kwargs):
+        """Initialize the RelativeRefFinder object."""
+        super().__init__(*args, **kwargs)
+        self.root_dir = root_dir
+        self.references: t.List[docutils.nodes.reference] = []
+
+    def visit_reference(self, node: docutils.nodes.reference) -> None:
+        """Call for "reference" nodes."""
+        assert isinstance(node, docutils.nodes.TextElement), type(node)
+        # print(f'  RelativeRefFinder: examining reference {node}')
+        # if len(node.children) != 1 or not isinstance(node.children[0], docutils.nodes.Text) \
+        #         or not all(_ in node.attributes for _ in ('name', 'refuri')):
+        if len(node.children) != 1 or 'refuri' not in node.attributes \
+                or any(node.attributes['refuri'].startswith(_) for _ in {'http://', 'https://'}):
+            return
+        # print('  RelativeRefFinder: reference passed initial check')
+        path = pathlib.Path(node.attributes['refuri'])
+        try:
+            if path.is_absolute():
+                return
+            resolved_path = path.resolve()
+        except OSError:  # in is_absolute() and resolve(), on URLs in Windows
+            return
+        try:
+            resolved_path.relative_to(self.root_dir)
+        except ValueError:
+            return
+        if not path.is_file():
+            return
+        # print('  RelativeRefFinder: reference points to existing file')
+        # assert node.attributes['name'] == node.children[0].astext()
+        self.references.append(node)
+
+    def unknown_visit(self, node: docutils.nodes.Node) -> None:
+        """Call for unknown node types."""
+        return
+
+
+def resolve_relative_rst_links(text: str, base_link: str) -> str:
+    """Resolve all relative links in a given string representing an RST document.
+
+    Links are resolved only if they point to files existing in the project's working directory.
 
     All links of form `link`_ become `link <base_link/link>`_.
+
+    And all
     """
-    import docutils.nodes
-    import docutils.parsers.rst
-    import docutils.utils
-
-    def parse_rst(text: str) -> docutils.nodes.document:
-        """Parse text assuming it's an RST markup."""
-        parser = docutils.parsers.rst.Parser()
-        components = (docutils.parsers.rst.Parser,)
-        settings = docutils.frontend.OptionParser(components=components).get_default_values()
-        document = docutils.utils.new_document('<rst-doc>', settings=settings)
-        parser.parse(text, document)
-        return document
-
-    class SimpleRefCounter(docutils.nodes.NodeVisitor):
-        """Find all simple references in a given docutils document."""
-
-        def __init__(self, *args, **kwargs):
-            """Initialize the SimpleRefCounter object."""
-            super().__init__(*args, **kwargs)
-            self.references = []
-
-        def visit_reference(self, node: docutils.nodes.reference) -> None:
-            """Call for "reference" nodes."""
-            if len(node.children) != 1 or not isinstance(node.children[0], docutils.nodes.Text) \
-                    or not all(_ in node.attributes for _ in ('name', 'refuri')):
-                return
-            path = pathlib.Path(node.attributes['refuri'])
-            try:
-                if path.is_absolute():
-                    return
-                resolved_path = path.resolve()
-            except FileNotFoundError:  # in resolve(), prior to Python 3.6
-                return
-            except OSError:  # in is_absolute() and resolve(), on URLs in Windows
-                return
-            try:
-                resolved_path.relative_to(HERE)
-            except ValueError:
-                return
-            if not path.is_file():
-                return
-            assert node.attributes['name'] == node.children[0].astext()
-            self.references.append(node)
-
-        def unknown_visit(self, node: docutils.nodes.Node) -> None:
-            """Call for unknown node types."""
-            return
-
     document = parse_rst(text)
-    visitor = SimpleRefCounter(document)
-    document.walk(visitor)
-    for target in visitor.references:
-        name = target.attributes['name']
-        uri = target.attributes['refuri']
-        new_link = '`{} <{}{}>`_'.format(name, base_link, uri)
-        if name == uri:
-            text = text.replace('`<{}>`_'.format(uri), new_link)
+    finder = RelativeRefFinder(HERE, document)
+    document.walk(finder)
+    for target in finder.references:
+        print(f'  resolve_relative_rst_links: resolving reference {target}')
+        refuri = target.attributes['refuri']
+        if 'name' in target.attributes:
+            name = target.attributes['name']
+            if name == refuri:
+                old_link = f'`<{refuri}>`_'
+            else:
+                old_link = f'`{name} <{refuri}>`_'
+            new_link = f'`{name} <{base_link}{refuri}>`_'
         else:
-            text = text.replace('`{} <{}>`_'.format(name, uri), new_link)
+            old_link = f' :target: {refuri}'
+            new_link = f' :target: {base_link}{refuri}'
+        text = text.replace(old_link, new_link)
+        print(f'  resolve_relative_rst_links: replaced "{old_link}" with "{new_link}"')
     return text
 
 
@@ -233,8 +248,8 @@ class Package:
     packages = None  # type: t.List[str]
     """If None, determined with help of setuptools."""
 
-    package_data = {}
-    exclude_package_data = {}
+    package_data = {}  # type: t.Dict[str, t.List[str]]
+    exclude_package_data = {}  # type: t.Dict[str, t.List[str]]
 
     install_requires = None  # type: t.List[str]
     """If None, determined using requirements.txt."""
@@ -263,18 +278,18 @@ class Package:
         raise AttributeError((cls, names))
 
     @classmethod
-    def parse_readme(cls, readme_path: str = 'README.rst',
+    def parse_readme(cls, readme_filename: str = 'README.rst',
                      encoding: str = 'utf-8') -> t.Tuple[str, str]:
         """Parse readme and resolve relative links in it if it is feasible.
 
         Links are resolved if readme is in rst format and the package is hosted on GitHub.
         """
-        readme_path = pathlib.Path(readme_path)
-        with HERE.joinpath(readme_path).open(encoding=encoding) as readme_file:
+        readme_path = HERE.joinpath(readme_filename)
+        with readme_path.open(encoding=encoding) as readme_file:
             long_description = readme_file.read()  # type: str
 
         if readme_path.suffix.lower() == '.rst' and cls.url.startswith('https://github.com/'):
-            base_url = '{}/blob/v{}/'.format(cls.url, cls.version)
+            base_url = f'{cls.url}/blob/v{cls.version}/'
             long_description = resolve_relative_rst_links(long_description, base_url)
 
         long_description_content_type = {'.rst': 'text/x-rst', '.md': 'text/markdown'}.get(
