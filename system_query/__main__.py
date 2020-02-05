@@ -1,4 +1,4 @@
-"""This is entry point of system_query package."""
+"""Entry point of the command-line interface of system_query package."""
 
 from .main import main
 

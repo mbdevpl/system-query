@@ -1,4 +1,4 @@
-"""Command-line interface of system_query."""
+"""Command-line interface of system_query package."""
 
 import argparse
 import pathlib

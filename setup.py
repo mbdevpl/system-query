@@ -4,7 +4,6 @@ import setup_boilerplate
 
 
 class Package(setup_boilerplate.Package):
-
     """Package metadata."""
 
     name = 'system-query'
