@@ -21,9 +21,9 @@ class Package(setup_boilerplate.Package):
         'Operating System :: MacOS :: MacOS X',
         'Operating System :: Microsoft :: Windows',
         'Operating System :: POSIX :: Linux',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3 :: Only',
         'Topic :: Education',
         'Topic :: Scientific/Engineering',
@@ -31,10 +31,11 @@ class Package(setup_boilerplate.Package):
         ]
     keywords = ['system', 'software', 'hardware']
     extras_require = {
-        'all': ['pint >= 0.9, == 0.9.*', 'psutil ~= 5.6', 'py-cpuinfo == 5.*', 'pycuda', 'pyudev'],
-        'cpu': ['pint >= 0.9, == 0.9.*', 'psutil ~= 5.6', 'py-cpuinfo == 5.*'],
-        'gpu': ['pycuda'],
-        'hdd': ['pyudev'],
+        'all': ['pint ~= 0.10.1', 'psutil ~= 5.6', 'py-cpuinfo == 5.*', 'pycuda >= 2019.1',
+                'pyudev ~= 0.22.0'],
+        'cpu': ['pint ~= 0.10.1', 'psutil ~= 5.6', 'py-cpuinfo == 5.*'],
+        'gpu': ['pycuda >= 2019.1'],
+        'hdd': ['pyudev ~= 0.22.0'],
         'ram': ['psutil ~= 5.6'],
         'swap': ['psutil ~= 5.6']}
 
