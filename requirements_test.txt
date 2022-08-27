@@ -1,7 +1,7 @@
-colorlog >= 4.1
-docutils >= 0.16
-pip >= 20.0
-Pygments >= 2.5
-setuptools >= 45.1
-wheel >= 0.34
+colorlog ~= 6.6
+docutils ~= 0.18
+pip >= 21.0
+Pygments ~= 2.11
+setuptools >= 60.4
+wheel >= 0.37
 -rrequirements.txt

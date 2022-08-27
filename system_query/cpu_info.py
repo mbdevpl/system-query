@@ -37,6 +37,8 @@ def _get_cache_size(level: int, cpuinfo_data: dict) -> t.Optional[int]:
         'l{}_data_cache_size'.format(level), cpuinfo_data.get('l{}_cache_size'.format(level), None))
     if raw_value is None:
         return None
+    if isinstance(raw_value, int):
+        return raw_value
     assert isinstance(raw_value, str), (type(raw_value), raw_value)
     # Sometimes cpuinfo prints e.g. `192 KiB (6 instances)` so we use
     # just the first two words
