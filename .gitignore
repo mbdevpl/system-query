@@ -1,14 +1,14 @@
-# Bintray deployment
-/travis_bintray_descriptor_gen.py
-/.bintray.json
+# IDE: Visual Studio Code
+/.vscode
 
-# Eclipse
-/.settings
-/.*project
+# OS: macOS
+.DS_Store
 
-# Jupyter Notebook
-/.ipynb_checkpoints
-*-checkpoint.ipynb
+# OS: Windows
+desktop.ini
+System Volume Information
+Thumbs.db
+Thumbs.db*
 
 # Python
 /build
@@ -19,10 +19,10 @@ __pycache__
 *.egg-info
 *.pyc
 
-# Python coverage
+# Python: coverage
 /htmlcov
-/coverage.xml
 /.coverage
 
-# other
-/examples.py
+# Python: Jupyter notebooks
+.ipynb_checkpoints
+*-checkpoint.ipynb

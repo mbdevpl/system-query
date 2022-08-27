@@ -9,7 +9,7 @@ class Package(setup_boilerplate.Package):
     name = 'system-query'
     description = 'Comprehensive and concise system information querying tool.'
     url = 'https://github.com/mbdevpl/system-query'
-    author = 'Aleksandr Drozd, Mateusz Bysiek'
+    author = 'Aleksandr Drozd, Emil Vatai, Mateusz Bysiek'
     maintainer = 'Mateusz Bysiek'
     classifiers = [
         'Development Status :: 3 - Alpha',
@@ -21,9 +21,9 @@ class Package(setup_boilerplate.Package):
         'Operating System :: MacOS :: MacOS X',
         'Operating System :: Microsoft :: Windows',
         'Operating System :: POSIX :: Linux',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3 :: Only',
         'Topic :: System :: Hardware',
         'Topic :: System :: Monitoring',

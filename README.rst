@@ -15,21 +15,17 @@ Comprehensive and concise system information querying tool.
     :target: https://pypi.org/project/system-query
     :alt: package version from PyPI
 
-.. image:: https://travis-ci.com/mbdevpl/system-query.svg?branch=master
-    :target: https://travis-ci.com/mbdevpl/system-query
-    :alt: build status from Travis CI
+.. image:: https://github.com/mbdevpl/system-query/actions/workflows/python.yml/badge.svg?branch=main
+    :target: https://github.com/mbdevpl/system-query/actions
+    :alt: build status from GitHub
 
-.. image:: https://ci.appveyor.com/api/projects/status/github/mbdevpl/system-query?branch=master&svg=true
-    :target: https://ci.appveyor.com/project/mbdevpl/system-query
-    :alt: build status from AppVeyor
-
-.. image:: https://api.codacy.com/project/badge/Grade/b44e2fc42fcd4301bcd0fb11938a89da
-    :target: https://www.codacy.com/app/mbdevpl/system-query
-    :alt: grade from Codacy
-
-.. image:: https://codecov.io/gh/mbdevpl/system-query/branch/master/graph/badge.svg
+.. image:: https://codecov.io/gh/mbdevpl/system-query/branch/main/graph/badge.svg
     :target: https://codecov.io/gh/mbdevpl/system-query
     :alt: test coverage from Codecov
+
+.. image:: https://api.codacy.com/project/badge/Grade/b44e2fc42fcd4301bcd0fb11938a89da
+    :target: https://app.codacy.com/gh/mbdevpl/system-query
+    :alt: grade from Codacy
 
 .. image:: https://img.shields.io/github/license/mbdevpl/system-query.svg
     :target: NOTICE
@@ -195,12 +191,12 @@ Usage information:
 Requirements
 ============
 
-Python version 3.6 or later.
+Python version 3.8 or later.
 
 Python libraries as specified in `<requirements.txt>`_.
-Recommended (but optional) packages are listed in `<optional_requirements.txt>`_.
+Recommended (but optional) packages are listed in `<requirements_optional.txt>`_.
 
-Building and running tests additionally requires packages listed in `<test_requirements.txt>`_.
+Building and running tests additionally requires packages listed in `<requirements_test.txt>`_.
 
 Tested on Linux, OS X and Windows.
 
@@ -215,6 +211,8 @@ Contributors
 ============
 
 Aleksandr Drozd
+
+Emil Vatai
 
 Mateusz Bysiek
 
