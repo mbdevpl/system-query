@@ -198,9 +198,9 @@ Requirements
 Python version 3.6 or later.
 
 Python libraries as specified in `<requirements.txt>`_.
-Recommended (but optional) packages are listed in `<optional_requirements.txt>`_.
+Recommended (but optional) packages are listed in `<requirements_optional.txt>`_.
 
-Building and running tests additionally requires packages listed in `<test_requirements.txt>`_.
+Building and running tests additionally requires packages listed in `<requirements_test.txt>`_.
 
 Tested on Linux, OS X and Windows.
 
