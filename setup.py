@@ -9,7 +9,7 @@ class Package(setup_boilerplate.Package):
     name = 'system-query'
     description = 'Comprehensive and concise system information querying tool.'
     url = 'https://github.com/mbdevpl/system-query'
-    author = 'Aleksandr Drozd, Mateusz Bysiek'
+    author = 'Aleksandr Drozd, Emil Vatai, Mateusz Bysiek'
     maintainer = 'Mateusz Bysiek'
     classifiers = [
         'Development Status :: 3 - Alpha',

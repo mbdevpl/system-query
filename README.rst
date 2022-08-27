@@ -216,6 +216,8 @@ Contributors
 
 Aleksandr Drozd
 
+Emil Vatai
+
 Mateusz Bysiek
 
 For licensing information, please see `<LICENSE>`_ and `<NOTICE>`_.
