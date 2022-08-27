@@ -191,7 +191,7 @@ Usage information:
 Requirements
 ============
 
-Python version 3.6 or later.
+Python version 3.8 or later.
 
 Python libraries as specified in `<requirements.txt>`_.
 Recommended (but optional) packages are listed in `<requirements_optional.txt>`_.
