@@ -33,11 +33,11 @@ class Package(setup_boilerplate.Package):
         'Typing :: Typed']
     keywords = ['system', 'software', 'hardware']
     extras_require = {
-        'all': ['pint ~= 0.10.1', 'psutil ~= 5.6', 'py-cpuinfo == 5.*', 'pycuda >= 2019.1',
-                'pyudev ~= 0.22.0'],
-        'cpu': ['pint ~= 0.10.1', 'psutil ~= 5.6', 'py-cpuinfo == 5.*'],
-        'gpu': ['pycuda >= 2019.1'],
-        'hdd': ['pyudev ~= 0.22.0'],
+        'all': ['pint ~= 0.19.1', 'psutil ~= 5.6', 'py-cpuinfo ~= 8.0', 'pycuda >= 2022.1',
+                'pyudev ~= 0.24.0'],
+        'cpu': ['pint ~= 0.19.1', 'psutil ~= 5.6', 'py-cpuinfo ~= 8.0'],
+        'gpu': ['pycuda >= 2022.1'],
+        'hdd': ['pyudev ~= 0.24.0'],
         'ram': ['psutil ~= 5.6'],
         'swap': ['psutil ~= 5.6']}
 
