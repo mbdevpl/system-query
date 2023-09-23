@@ -198,7 +198,7 @@ Recommended (but optional) packages are listed in `<requirements_optional.txt>`_
 
 Building and running tests additionally requires packages listed in `<requirements_test.txt>`_.
 
-Tested on Linux, OS X and Windows.
+Tested on Linux, macOS and Windows.
 
 Additionally, for all features to work you should have the following libraries
 installed in your system:
