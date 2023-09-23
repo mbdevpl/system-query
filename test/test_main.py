@@ -10,7 +10,7 @@ import os
 import tempfile
 import unittest
 
-from .test_setup import run_module
+from boilerplates.packaging_tests import run_module
 
 _LOG = logging.getLogger(__name__)
 
