@@ -1,0 +1,4 @@
+-r requirements_cpu.txt
+-r requirements_gpu.txt
+-r requirements_hdd.txt
+-r requirements_memory.txt
