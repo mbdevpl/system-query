@@ -1,12 +1,9 @@
 """Functions to query system's hard drives."""
 
 import itertools
-# import logging
 import typing as t
 
 from .available_features import pyudev, HDD
-
-# _LOG = logging.getLogger(__name__)
 
 IGNORED_DEVICE_PATHS = {'/dm', '/loop', '/md'}
 

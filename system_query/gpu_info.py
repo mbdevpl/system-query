@@ -55,7 +55,10 @@ COMPUTE_CAPABILITY_MULTIPLIERS = {
 
 def calculate_cuda_cores(compute_capability: t.Tuple[int, int],
                          multiprocessors: int) -> t.Optional[int]:
-    """Calculate number of cuda cores according to Nvidia's specifications."""
+    """Calculate number of cuda cores according to Nvidia's specifications.
+
+    Source: https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#compute-capabilities
+    """
     multiplier_major = COMPUTE_CAPABILITY_MULTIPLIERS.get(compute_capability[0])
     if isinstance(multiplier_major, int):
         return multiprocessors * multiplier_major
