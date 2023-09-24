@@ -7,6 +7,15 @@ requires = [
 max-line-length = 100
 max-doc-length = 100
 
+[[tool.mypy.overrides]]
+module = [
+    'cpuinfo',
+    'pint',
+    'pycuda',
+    'pyudev'
+]
+ignore_missing_imports = true
+
 [tool.pydocstyle]
 ignore = [
     'D102', 'D103', 'D105', 'D107',
