@@ -17,7 +17,7 @@ except:  # pylint: disable = bare-except  # noqa: E722
 try:
     import pint
 except ImportError:
-    pint = None
+    pint = None  # type: ignore
     _LOG.info("unable to import package pint", exc_info=True)
 
 CPU = cpuinfo is not None and pint is not None
@@ -25,34 +25,34 @@ CPU = cpuinfo is not None and pint is not None
 try:
     import psutil
 except ImportError:
-    psutil = None
+    psutil = None  # type: ignore
     _LOG.info("unable to import package psutil", exc_info=True)
 
 CPU_CLOCK = psutil is not None
 CPU_CORES = psutil is not None
 
-_cuda_failed = False
+_GPU_FAILED = False
 try:
     import pycuda
 except ImportError:
-    _cuda_failed = True
+    _GPU_FAILED = True
     _LOG.info("unable to import package pycuda", exc_info=True)
 else:
     try:
         import pycuda.driver as cuda
     except ImportError:
-        _cuda_failed = True
+        _GPU_FAILED = True
         _LOG.info("unable to import package pycuda.driver", exc_info=True)
     else:
         try:
             import pycuda.autoinit
         except pycuda._driver.Error:  # pylint: disable = protected-access
-            _cuda_failed = True
+            _GPU_FAILED = True
             _LOG.info("unable to initialize cuda", exc_info=True)
         else:
             _LOG.debug('using CUDA version %s', '.'.join(str(_) for _ in cuda.get_version()))
 
-if _cuda_failed:
+if _GPU_FAILED:
     cuda = None  # pylint: disable = invalid-name
 
 GPU = cuda is not None
