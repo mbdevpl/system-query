@@ -41,20 +41,29 @@ def query_gpu(device: 'cuda.Device') -> t.Mapping[str, t.Any]:
             ) from err
 
 
+COMPUTE_CAPABILITY_MULTIPLIERS = {
+    # Fermi
+    2: {1: 48, None: 32},
+    # Kepler
+    3: 192,
+    # Maxwell
+    5: 128,
+    # Pascal
+    6: {0: 64, 1: 128}
+}
+
+
 def calculate_cuda_cores(compute_capability: t.Tuple[int, int],
                          multiprocessors: int) -> t.Optional[int]:
     """Calculate number of cuda cores according to Nvidia's specifications."""
-    if compute_capability[0] == 2:  # Fermi
-        if compute_capability[1] == 1:
-            return multiprocessors * 48
-        return multiprocessors * 32
-    if compute_capability[0] == 3:  # Kepler
-        return multiprocessors * 192
-    if compute_capability[0] == 5:  # Maxwell
-        return multiprocessors * 128
-    if compute_capability[0] == 6:  # Pascal
-        if compute_capability[1] == 0:
-            return multiprocessors * 64
-        if compute_capability[1] == 1:
-            return multiprocessors * 128
+    multiplier_major = COMPUTE_CAPABILITY_MULTIPLIERS.get(compute_capability[0])
+    if isinstance(multiplier_major, int):
+        return multiprocessors * multiplier_major
+    if isinstance(multiplier_major, dict):
+        multiplier_minor = multiplier_major.get(compute_capability[1])
+        if multiplier_minor is None and None in multiplier_major:
+            multiplier_minor = multiplier_major[None]
+        if multiplier_minor is None:
+            return None
+        return multiprocessors * multiplier_minor
     return None
