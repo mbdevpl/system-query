@@ -34,7 +34,7 @@ def _get_cache_size(level: int, cpuinfo_data: dict) -> t.Optional[int]:
     If no units are provided, assume source data is in KiB.
     """
     raw_value = cpuinfo_data.get(
-        'l{}_data_cache_size'.format(level), cpuinfo_data.get('l{}_cache_size'.format(level), None))
+        f'l{level}_data_cache_size', cpuinfo_data.get(f'l{level}_cache_size', None))
     if raw_value is None:
         return None
     if isinstance(raw_value, int):

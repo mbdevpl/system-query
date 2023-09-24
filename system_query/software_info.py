@@ -90,7 +90,7 @@ def query_software():
         py_packages = {}
         for package in PYTHON_PACKAGES:
             version = _run_version_query(
-                '{} -m pip freeze | grep "{}"'.format(py_ver, package), shell=True)
+                f'{py_ver} -m pip freeze | grep "{package}"', shell=True)
             if version is None:
                 continue
             py_packages[package] = {'version': version}

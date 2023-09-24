@@ -41,7 +41,7 @@ def query(query_scope: str, **kwargs) -> t.Any:
     elif query_scope == 'ram':
         info = query_ram(**kwargs)
     else:
-        raise NotImplementedError('scope={}'.format(query_scope))
+        raise NotImplementedError(f'scope={query_scope}')
     return info
 
 
@@ -55,7 +55,7 @@ def export(info, export_format: str, export_target: t.Any):
             with open(str(export_target), 'w', encoding='utf-8') as json_file:
                 json.dump(info, json_file, indent=JSON_INDENT, ensure_ascii=JSON_ENSURE_ASCII)
         else:
-            raise NotImplementedError('format={} target={}'.format(export_format, export_target))
+            raise NotImplementedError(f'format={export_format} target={export_target}')
     elif export_format == 'raw':
         if export_target in (sys.stdout, sys.stderr):
             pprint.pprint(info, stream=export_target)
@@ -63,6 +63,6 @@ def export(info, export_format: str, export_target: t.Any):
             with open(str(export_target), 'a', encoding='utf-8') as text_file:
                 text_file.write(str(info))
         else:
-            raise NotImplementedError('format={} target={}'.format(export_format, export_target))
+            raise NotImplementedError(f'format={export_format} target={export_target}')
     else:
-        raise NotImplementedError('format={} target={}'.format(export_format, export_target))
+        raise NotImplementedError(f'format={export_format} target={export_target}')

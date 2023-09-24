@@ -15,7 +15,7 @@ def main(args=None, namespace=None):
     """
     parser = argparse.ArgumentParser(
         prog='system_query', description='''Comprehensive and concise system information tool.
-        Query a given hardware and/or softawre scope of your system and get results in human-
+        Query a given hardware and/or software scope of your system and get results in human-
         and machine-readable formats.''',
         epilog='''Copyright 2017-2023 by the contributors, Apache License 2.0,
         https://github.com/mbdevpl/system-query''',
