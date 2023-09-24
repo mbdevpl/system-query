@@ -41,6 +41,7 @@ else:
     try:
         import pycuda.driver as cuda
     except ImportError:
+        _cuda_failed = True
         _LOG.info("unable to import package pycuda.driver", exc_info=True)
     else:
         try:
