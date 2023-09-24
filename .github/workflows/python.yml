@@ -26,7 +26,6 @@ jobs:
       - run: python -m coverage run --branch --source . -m unittest -v
       - run: pip install -r requirements_all_github.txt
       - run: python -m coverage run --append --branch --source . -m unittest -v
-      # - run: sudo $(which python) -m coverage run --append --branch --source . -m unittest -v test.test_with_sudo
       - run: python -m coverage report --show-missing
       - run: codecov
   publish:

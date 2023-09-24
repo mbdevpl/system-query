@@ -1,71 +1,144 @@
+#!/usr/bin/env groovy
+
+library 'jenkins-mbdev-pl-libs'
+
 pipeline {
-  agent none
-  environment {
-    CODECOV_TOKEN = credentials('codecov-token-system-query')
+
+  options {
+    ansiColor('xterm')
   }
-  stages { stage('Test') { parallel {
-    stage('GTX 980 Ti') {
-      agent { label 'x86_64 && gpu && nvida-gtx-980ti' }
+
+  environment {
+    PYTHON_PACKAGE = 'system-query'
+  }
+
+  agent {
+    dockerfile {
+      additionalBuildArgs '--build-arg USER_ID=${USER_ID} --build-arg GROUP_ID=${GROUP_ID}' \
+        + ' --build-arg AUX_GROUP_IDS="${AUX_GROUP_IDS}" --build-arg TIMEZONE=${TIMEZONE}'
+      label 'docker && gpu'
+    }
+  }
+
+  stages {
+
+    stage('Lint') {
+      environment {
+        PYTHON_MODULES = "${env.PYTHON_PACKAGE.replace('-', '_')} test *.py"
+      }
       steps {
-        sh "python3 -m coverage run --branch --source . -m unittest -v"
-        sh "codecov --build \"${NODE_NAME} ${BUILD_DISPLAY_NAME}\" --token \"${CODECOV_TOKEN}\""
+        sh """#!/usr/bin/env bash
+          set -Eeux
+          python3 -m pylint ${PYTHON_MODULES} |& tee pylint.log
+          echo "\${PIPESTATUS[0]}" | tee pylint_status.log
+          python3 -m mypy ${PYTHON_MODULES} |& tee mypy.log
+          echo "\${PIPESTATUS[0]}" | tee mypy_status.log
+          python3 -m flake518 ${PYTHON_MODULES} |& tee flake518.log
+          echo "\${PIPESTATUS[0]}" | tee flake518_status.log
+          python3 -m pydocstyle ${PYTHON_MODULES} |& tee pydocstyle.log
+          echo "\${PIPESTATUS[0]}" | tee pydocstyle_status.log
+        """
       }
     }
-    stage('GTX 1080 Ti') {
-      agent { label 'x86_64 && gpu && nvidia-gtx-1080ti' }
+
+    stage('Test') {
       steps {
-        sh "python3 -m coverage run --branch --source . -m unittest -v"
-        sh "codecov --build \"${NODE_NAME} ${BUILD_DISPLAY_NAME}\" --token \"${CODECOV_TOKEN}\""
+        sh '''#!/usr/bin/env bash
+          set -Eeuxo pipefail
+          python3 -m coverage run --branch --source . -m unittest -v
+          pip3 install --no-cache-dir -r requirements_all.txt
+          python3 -m coverage run --append --branch --source . -m unittest -v
+          sudo $(which python3) -m coverage run --append --branch --source . -m unittest -v test.test_with_sudo
+        '''
       }
     }
-    stage('RTX 2080 Ti') {
-      agent { label 'x86_64 && gpu && nvidia-rtx-2080ti' }
+
+    stage('Coverage') {
       steps {
-        sh "python3 -m coverage run --branch --source . -m unittest -v"
-        sh "codecov --build \"${NODE_NAME} ${BUILD_DISPLAY_NAME}\" --token \"${CODECOV_TOKEN}\""
+        sh '''#!/usr/bin/env bash
+          set -Eeux
+          python3 -m coverage report --show-missing |& tee coverage.log
+          echo "${PIPESTATUS[0]}" | tee coverage_status.log
+        '''
+        script {
+          defaultHandlers.afterPythonBuild()
+        }
       }
     }
-    stage('Tesla K20Xm') {
-      agent { label 'x86_64 && gpu && nvidia-tesla-k20xm' }
+
+    stage('Codecov') {
+      environment {
+        CODECOV_TOKEN = credentials('codecov-token-mbdevpl-system-query')
+      }
       steps {
-        sh "python3 -m coverage run --branch --source . -m unittest -v"
-        sh "codecov --build \"${NODE_NAME} ${BUILD_DISPLAY_NAME}\" --token \"${CODECOV_TOKEN}\""
+        sh '''#!/usr/bin/env bash
+          set -Eeuxo pipefail
+          python3 -m codecov --token ${CODECOV_TOKEN}
+        '''
       }
     }
-    stage('Tesla K40c') {
-      agent { label 'x86_64 && gpu && nvidia-tesla-k40c' }
+
+    stage('Upload') {
+      when {
+        anyOf {
+          branch 'main'
+          buildingTag()
+        }
+      }
+      environment {
+        VERSION = sh(script: 'python3 -m version_query --predict .', returnStdout: true).trim()
+        PYPI_AUTH = credentials('mbdev-pypi-auth')
+        TWINE_USERNAME = "${PYPI_AUTH_USR}"
+        TWINE_PASSWORD = "${PYPI_AUTH_PSW}"
+        TWINE_REPOSITORY_URL = credentials('mbdev-pypi-public-url')
+      }
       steps {
-        sh "python3 -m coverage run --branch --source . -m unittest -v"
-        sh "codecov --build \"${NODE_NAME} ${BUILD_DISPLAY_NAME}\" --token \"${CODECOV_TOKEN}\""
+        sh """#!/usr/bin/env bash
+          set -Eeuxo pipefail
+          python3 -m twine upload \
+            dist/${PYTHON_PACKAGE.replace('-', '_')}-${VERSION}-py3-none-any.whl \
+            dist/${PYTHON_PACKAGE}-${VERSION}.tar.gz \
+            dist/${PYTHON_PACKAGE}-${VERSION}.zip
+        """
       }
     }
-    stage('Tesla P100') {
-      agent { label 'x86_64 && gpu && nvidia-tesla-p100' }
+
+    stage('Release') {
+      when {
+        buildingTag()
+      }
+      environment {
+        VERSION = sh(script: 'python3 -m version_query .', returnStdout: true).trim()
+      }
       steps {
-        sh "python3 -m coverage run --branch --source . -m unittest -v"
-        sh "codecov --build \"${NODE_NAME} ${BUILD_DISPLAY_NAME}\" --token \"${CODECOV_TOKEN}\""
+        script {
+          githubUtils.createRelease([
+            "dist/${PYTHON_PACKAGE.replace('-', '_')}-${VERSION}-py3-none-any.whl",
+            "dist/${PYTHON_PACKAGE}-${VERSION}.tar.gz",
+            "dist/${PYTHON_PACKAGE}-${VERSION}.zip"
+            ])
+        }
       }
     }
-    stage('Xeon Phi 7210F') {
-      agent { label 'x86_64 && phi && intel-xeon-phi-7210f' }
-      steps {
-        sh "python3 -m coverage run --branch --source . -m unittest -v"
-        sh "codecov --build \"${NODE_NAME} ${BUILD_DISPLAY_NAME}\" --token \"${CODECOV_TOKEN}\""
+
+  }
+
+  post {
+    unsuccessful {
+      script {
+        defaultHandlers.afterBuildFailed()
       }
     }
-    stage('Xeon Phi 7295') {
-      agent { label 'x86_64 && phi && intel-xeon-phi-7295' }
-      steps {
-        sh "python3 -m coverage run --branch --source . -m unittest -v"
-        sh "codecov --build \"${NODE_NAME} ${BUILD_DISPLAY_NAME}\" --token \"${CODECOV_TOKEN}\""
+    regression {
+      script {
+        defaultHandlers.afterBuildBroken()
       }
     }
-    stage('Arm') {
-      agent { label 'arm' }
-      steps {
-        sh "python3 -m coverage run --branch --source . -m unittest -v"
-        sh "codecov --build \"${NODE_NAME} ${BUILD_DISPLAY_NAME}\" --token \"${CODECOV_TOKEN}\""
+    fixed {
+      script {
+        defaultHandlers.afterBuildFixed()
       }
     }
-  } } }
+  }
+
 }
