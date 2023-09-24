@@ -46,6 +46,9 @@ else:
     else:
         try:
             import pycuda.autoinit
+        except ImportError:
+            _GPU_FAILED = True
+            _LOG.info("unable to import package pycuda.autoinit", exc_info=True)
         except pycuda._driver.Error:  # pylint: disable = protected-access
             _GPU_FAILED = True
             _LOG.info("unable to initialize cuda", exc_info=True)
