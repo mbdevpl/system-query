@@ -1,6 +1,6 @@
 ARG CUDA_VERSION="11.7.1"
 
-FROM nvidia/cuda:${CUDA_VERSION}-base-ubuntu22.04
+FROM nvidia/cuda:${CUDA_VERSION}-devel-ubuntu22.04
 
 SHELL ["/bin/bash", "-c"]
 
