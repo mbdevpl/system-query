@@ -1,0 +1,4 @@
+-r requirements_cpu.txt
+# -r requirements_gpu.txt # CUDA is not available on GitHub
+-r requirements_hdd.txt
+-r requirements_memory.txt
