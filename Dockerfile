@@ -1,6 +1,6 @@
-ARG PYTHON_VERSION="3.11"
+ARG CUDA_VERSION="11.7.1"
 
-FROM python:${PYTHON_VERSION}
+FROM nvidia/cuda:${CUDA_VERSION}-base-ubuntu22.04
 
 SHELL ["/bin/bash", "-c"]
 
