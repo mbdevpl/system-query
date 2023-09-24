@@ -30,6 +30,10 @@ RUN set -Eeuxo pipefail && \
   echo ${AUX_GROUP_IDS} | xargs -n1 echo | xargs -I% addgroup --gid % group% && \
   echo ${AUX_GROUP_IDS} | xargs -n1 echo | xargs -I% usermod --append --groups group% user
 
+RUN set -Eeuxo pipefail && \
+  usermod --append --groups sudo user && \
+  echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
 # install dependencies
 
 RUN set -Eeuxo pipefail && \
