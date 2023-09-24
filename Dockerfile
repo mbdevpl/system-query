@@ -38,7 +38,8 @@ RUN set -Eeuxo pipefail && \
     git \
     python3-dev \
     python3-pip \
-    python3-venv && \
+    python3-venv \
+    sudo && \
   apt-get -qy autoremove && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
