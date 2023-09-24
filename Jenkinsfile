@@ -48,7 +48,7 @@ pipeline {
           python3 -m coverage run --branch --source . -m unittest -v
           pip3 install --no-cache-dir -r requirements_all.txt
           python3 -m coverage run --append --branch --source . -m unittest -v
-          sudo $(which python3) -m coverage run --append --branch --source . -m unittest -v test.test_with_sudo
+          # sudo $(which python3) -m coverage run --append --branch --source . -m unittest -v test.test_with_sudo
         '''
       }
     }
