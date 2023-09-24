@@ -1,0 +1,29 @@
+## /.gitignore
+
+# IDE: Visual Studio Code
+/.vscode
+
+# OS: macOS
+.DS_Store
+
+# OS: Windows
+desktop.ini
+System Volume Information
+Thumbs.db*
+
+# Python
+/build
+/dist
+/.cache
+__pycache__
+*.egg
+*.egg-info
+*.pyc
+
+# Python: coverage
+/htmlcov
+/.coverage
+
+# Python: Jupyter notebooks
+.ipynb_checkpoints
+*-checkpoint.ipynb
