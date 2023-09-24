@@ -24,8 +24,8 @@ def query_hdd() -> t.Dict[str, dict]:
         for device_ in itertools.chain([device], device.ancestors):
             try:
                 hdd['model'] = device_.attributes.asstring('model')
-                break
             except KeyError:
-                pass
+                continue
+            break
         hdds[device.device_node] = hdd
     return hdds

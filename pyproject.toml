@@ -12,6 +12,8 @@ module = [
     'cpuinfo',
     'pint',
     'pycuda',
+    'pycuda.autoinit',
+    'pycuda.driver',
     'pyudev'
 ]
 ignore_missing_imports = true

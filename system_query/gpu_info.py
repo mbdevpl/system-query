@@ -37,8 +37,8 @@ def query_gpu(device: 'cuda.Device') -> t.Mapping[str, t.Any]:
             }
     except KeyError as err:
         raise QueryError(
-            'expected value not present among device attributes: {}'
-            .format(device.get_attributes())) from err
+            f'expected value not present among device attributes: {device.get_attributes()}'
+            ) from err
 
 
 def calculate_cuda_cores(compute_capability: t.Tuple[int, int],
