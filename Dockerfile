@@ -10,7 +10,7 @@ ARG TIMEZONE="Europe/Warsaw"
 
 RUN set -Eeuxo pipefail && \
   apt-get update && \
-  apt-get install --no-install-recommends -y \
+  DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
     tzdata && \
   echo "${TIMEZONE}" > /etc/timezone && \
   cp "/usr/share/zoneinfo/${TIMEZONE}" /etc/localtime && \
@@ -31,6 +31,15 @@ RUN set -Eeuxo pipefail && \
   echo ${AUX_GROUP_IDS} | xargs -n1 echo | xargs -I% usermod --append --groups group% user
 
 # install dependencies
+
+RUN set -Eeuxo pipefail && \
+  apt-get update && \
+  apt-get install --no-install-recommends -y \
+    python3-dev \
+    python3-pip && \
+  apt-get -qy autoremove && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
 
 WORKDIR /home/user/system-query
 
