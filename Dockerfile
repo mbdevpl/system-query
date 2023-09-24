@@ -35,6 +35,7 @@ RUN set -Eeuxo pipefail && \
 RUN set -Eeuxo pipefail && \
   apt-get update && \
   apt-get install --no-install-recommends -y \
+    git \
     python3-dev \
     python3-pip && \
   apt-get -qy autoremove && \
