@@ -1,8 +1,13 @@
-include setup_boilerplate.py
 include requirements.txt
 include LICENSE
 include NOTICE
 include ./*/py.typed
+
+include requirements_all.txt
+include requirements_cpu.txt
+include requirements_gpu.txt
+include requirements_hdd.txt
+include requirements_memory.txt
 
 include requirements_test.txt
 recursive-include ./test __init__.py

@@ -1,9 +1,22 @@
 [build-system]
-requires = ['docutils', 'setuptools', 'version-query', 'wheel']
+requires = [
+    'boilerplates[setup] ~= 1.0'
+]
 
 [tool.flake8]
 max-line-length = 100
 max-doc-length = 100
+
+[[tool.mypy.overrides]]
+module = [
+    'cpuinfo',
+    'pint',
+    'pycuda',
+    'pycuda.autoinit',
+    'pycuda.driver',
+    'pyudev'
+]
+ignore_missing_imports = true
 
 [tool.pydocstyle]
 ignore = [

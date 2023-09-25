@@ -1,9 +1,9 @@
 """Setup script for system_query package."""
 
-import setup_boilerplate
+import boilerplates.setup
 
 
-class Package(setup_boilerplate.Package):
+class Package(boilerplates.setup.Package):
     """Package metadata."""
 
     name = 'system-query'
@@ -18,12 +18,12 @@ class Package(setup_boilerplate.Package):
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: Apache Software License',
         'Natural Language :: English',
-        'Operating System :: MacOS :: MacOS X',
+        'Operating System :: MacOS',
         'Operating System :: Microsoft :: Windows',
         'Operating System :: POSIX :: Linux',
-        'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: 3 :: Only',
         'Topic :: System :: Hardware',
         'Topic :: System :: Monitoring',
@@ -33,13 +33,12 @@ class Package(setup_boilerplate.Package):
         'Typing :: Typed']
     keywords = ['system', 'software', 'hardware']
     extras_require = {
-        'all': ['pint ~= 0.19.1', 'psutil ~= 5.6', 'py-cpuinfo ~= 8.0', 'pycuda >= 2022.1',
-                'pyudev ~= 0.24.0'],
-        'cpu': ['pint ~= 0.19.1', 'psutil ~= 5.6', 'py-cpuinfo ~= 8.0'],
-        'gpu': ['pycuda >= 2022.1'],
-        'hdd': ['pyudev ~= 0.24.0'],
-        'ram': ['psutil ~= 5.6'],
-        'swap': ['psutil ~= 5.6']}
+        'all': boilerplates.setup.parse_requirements('requirements_all.txt'),
+        'cpu': boilerplates.setup.parse_requirements('requirements_cpu.txt'),
+        'gpu': boilerplates.setup.parse_requirements('requirements_gpu.txt'),
+        'hdd': boilerplates.setup.parse_requirements('requirements_hdd.txt'),
+        'ram': boilerplates.setup.parse_requirements('requirements_memory.txt'),
+        'swap': boilerplates.setup.parse_requirements('requirements_memory.txt')}
 
 
 if __name__ == '__main__':

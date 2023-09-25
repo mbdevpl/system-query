@@ -10,7 +10,7 @@ import os
 import tempfile
 import unittest
 
-from .test_setup import run_module
+from boilerplates.packaging_tests import run_module
 
 _LOG = logging.getLogger(__name__)
 
@@ -91,7 +91,7 @@ class Tests(unittest.TestCase):
                 tmpfile_name = tmpfile.name
             with preserve_logger_level('system_query'):
                 run_module('system_query', '--format', fmt, '--target', tmpfile_name)
-            with open(tmpfile_name) as tmpfile:
+            with open(tmpfile_name, encoding='utf-8') as tmpfile:
                 data = loaders[fmt](tmpfile.read())
                 self.assertIsInstance(data, dict)
                 self.assertGreater(len(data), 0)

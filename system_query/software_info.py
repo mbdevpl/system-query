@@ -9,7 +9,7 @@ _LOG = logging.getLogger(__name__)
 
 DEFAULT_VERSION_QUERY_FLAG = '--version'
 
-VERSION_QUERY_FLAGS = {
+VERSION_QUERY_FLAGS: t.Dict[str, t.Optional[str]] = {
     # compilers
     'gcc': None,
     'g++': None,
@@ -25,18 +25,24 @@ VERSION_QUERY_FLAGS = {
     'ifort': None,
     'mpicc': None,
     'mpic++': None,
-    'mpifort': None,
-    # python
-    'python': None,
-    'python2': None,
-    'python3': None,
-    'python3.6': None,
-    'python3.7': None,
-    'pip': None,
-    'pip2': None,
-    'pip3': None,
-    'pip3.6': None,
-    'pip3.7': None,
+    'mpifort': None}
+
+PYTHON_VERSIONS = [
+    '', '2', '3', '3.6', '3.7', '3.8', '3.9', '3.10', '3.11']
+
+PYTHONS = [
+    f'python{py_ver}' for py_ver in PYTHON_VERSIONS
+]
+
+VERSION_QUERY_FLAGS |= {
+    python: None for python in PYTHONS
+}
+
+VERSION_QUERY_FLAGS |= {
+    f'pip{py_ver}': None for py_ver in PYTHON_VERSIONS
+}
+
+VERSION_QUERY_FLAGS |= {
     # other
     'java': '-version',
     'ruby': None,
@@ -84,13 +90,13 @@ def query_software():
         software_info[program] = {'path': path, 'version': version}
 
     # python packages
-    for py_ver in ('python', 'python2', 'python3', 'python3.6', 'python3.7'):
+    for py_ver in PYTHONS:
         if py_ver not in software_info:
             continue
         py_packages = {}
         for package in PYTHON_PACKAGES:
             version = _run_version_query(
-                '{} -m pip freeze | grep "{}"'.format(py_ver, package), shell=True)
+                f'{py_ver} -m pip freeze | grep "{package}"', shell=True)
             if version is None:
                 continue
             py_packages[package] = {'version': version}

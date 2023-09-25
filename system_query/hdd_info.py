@@ -1,12 +1,9 @@
 """Functions to query system's hard drives."""
 
 import itertools
-# import logging
 import typing as t
 
 from .available_features import pyudev, HDD
-
-# _LOG = logging.getLogger(__name__)
 
 IGNORED_DEVICE_PATHS = {'/dm', '/loop', '/md'}
 
@@ -24,8 +21,8 @@ def query_hdd() -> t.Dict[str, dict]:
         for device_ in itertools.chain([device], device.ancestors):
             try:
                 hdd['model'] = device_.attributes.asstring('model')
-                break
             except KeyError:
-                pass
+                continue
+            break
         hdds[device.device_node] = hdd
     return hdds

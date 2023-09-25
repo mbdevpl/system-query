@@ -54,7 +54,8 @@ def query_ram_banks(sudo: bool = False, **_) -> t.List[t.Mapping[str, t.Any]]:
 def parse_lshw(sudo: bool = False):
     """Get RAM information via lshw."""
     cmd = (['sudo'] if sudo else []) + ['lshw', '-xml', '-quiet']
-    result = subprocess.run(cmd, timeout=5, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    result = subprocess.run(
+        cmd, check=True, timeout=5, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     return ET.fromstring(result.stdout.decode())
 
 
@@ -70,8 +71,10 @@ def query_ram_bank(node: ET.Element) -> t.Mapping[str, t.Any]:
     assert bank_size[0].text is not None
     ram_bank = {'memory': int(bank_size[0].text)}
     try:
-        if bank_clock[0].text is not None:
-            ram_bank['clock'] = int(bank_clock[0].text)
+        bank_clock_text = bank_clock[0].text
     except IndexError:
         pass
+    else:
+        if bank_clock_text is not None:
+            ram_bank['clock'] = int(bank_clock_text)
     return ram_bank

@@ -1,5 +1,0 @@
-pint ~= 0.19.1
-psutil ~= 5.6
-py-cpuinfo ~= 8.0
-# pycuda >= 2022.1 # CUDA is not available on Travis/AppVeyor
-pyudev ~= 0.24.0
