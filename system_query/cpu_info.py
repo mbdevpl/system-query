@@ -8,7 +8,7 @@ from .available_features import cpuinfo, pint, psutil, CPU, CPU_CLOCK, CPU_CORES
 _LOG = logging.getLogger(__name__)
 
 
-def query_cpu_clock() -> t.Tuple[t.Optional[int], t.Optional[int], t.Optional[int]]:
+def query_cpu_clock() -> t.Tuple[t.Optional[float], t.Optional[float], t.Optional[float]]:
     """Get current, minimum and maximum clock frequency of the CPU in the system."""
     if not CPU_CLOCK:
         return None, None, None

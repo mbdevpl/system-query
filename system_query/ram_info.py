@@ -71,9 +71,10 @@ def query_ram_bank(node: ET.Element) -> t.Mapping[str, t.Any]:
     assert bank_size[0].text is not None
     ram_bank = {'memory': int(bank_size[0].text)}
     try:
-        ram_bank['clock'] = int(bank_clock[0].text)
+        bank_clock_text = bank_clock[0].text
     except IndexError:
         pass
-    except TypeError:
-        pass
+    else:
+        if bank_clock_text is not None:
+            ram_bank['clock'] = int(bank_clock_text)
     return ram_bank
