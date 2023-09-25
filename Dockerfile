@@ -36,6 +36,7 @@ RUN set -Eeuxo pipefail && \
   apt-get update && \
   apt-get install --no-install-recommends -y \
     git \
+    libudev1 \
     python3-dev \
     python3-pip \
     python3-venv \
