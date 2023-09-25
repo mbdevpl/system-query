@@ -66,7 +66,11 @@ except ImportError:
     pyudev = None
     _LOG.info("unable to import package pyudev", exc_info=True)
 else:
-    pyudev.Context()
+    try:
+        pyudev.Context()
+    except ImportError:
+        pyudev = None  # pylint: disable = invalid-name
+        _LOG.info("udev library is not working", exc_info=True)
 
 HDD = pyudev is not None
 
