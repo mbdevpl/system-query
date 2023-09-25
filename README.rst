@@ -117,8 +117,8 @@ To be able to see GPUs in the system, make sure you have CUDA installed
 and install Python package :bash:`pycuda`.
 
 
-system_query.query_hdd()
-~~~~~~~~~~~~~~~~~~~~~~~~
+system_query.query_hdds()
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To be able to see HDDs in the system, make sure you have libudev installed
 and install Python package :bash:`pyudev`.

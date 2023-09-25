@@ -8,7 +8,7 @@ from .available_features import pyudev, HDD
 IGNORED_DEVICE_PATHS = {'/dm', '/loop', '/md'}
 
 
-def query_hdd() -> t.Dict[str, dict]:
+def query_hdds() -> t.Dict[str, dict]:
     """Get information about all hard drives."""
     if not HDD:
         return {}

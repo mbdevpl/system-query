@@ -4,7 +4,7 @@ import typing as t
 
 from .cpu_info import query_cpu
 from .gpu_info import query_gpus
-from .hdd_info import query_hdd
+from .hdd_info import query_hdds
 from .host_info import query_host
 from .os_info import query_os
 from .ram_info import query_ram
@@ -21,7 +21,7 @@ def query_all(**kwargs) -> t.Mapping[str, t.Any]:
         'cpu': query_cpu(**kwargs),
         'gpus': query_gpus(**kwargs),
         'ram': query_ram(**kwargs),
-        'hdds': query_hdd(),
+        'hdds': query_hdds(),
         'swap': query_swap(),
         # 'network': psutil.net_if_stats()
         }
