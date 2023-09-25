@@ -48,8 +48,8 @@ You can use *system-query* as a library and as a command-line tool.
     :backlinks: none
 
 
-Motiviation
-===========
+Motivation
+==========
 
 Where am I running?
 -------------------
@@ -110,8 +110,8 @@ To be able to see details like cache size, clock speed and core counts,
 install Python packages :bash:`pint` and :bash:`psutil`.
 
 
-system_query.query_gpu()
-~~~~~~~~~~~~~~~~~~~~~~~~
+system_query.query_gpus()
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To be able to see GPUs in the system, make sure you have CUDA installed
 and install Python package :bash:`pycuda`.
@@ -172,7 +172,7 @@ Usage information:
                         [--version]
 
     Comprehensive and concise system information tool. Query a given hardware
-    and/or softawre scope of your system and get results in human- and machine-
+    and/or software scope of your system and get results in human- and machine-
     readable formats.
 
     optional arguments:

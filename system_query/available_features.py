@@ -1,4 +1,4 @@
-"""Probe the system for available features to estalbish what can be queried."""
+"""Probe the system for available features to establish what can be queried."""
 
 import logging
 
