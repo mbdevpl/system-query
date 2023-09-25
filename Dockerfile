@@ -45,6 +45,13 @@ RUN set -Eeuxo pipefail && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
+USER user
+
+RUN set -Eeuxo pipefail && \
+  mkdir -p ~/system-query ~/.local/{bin,lib,share}
+
+USER root
+
 WORKDIR /home/user/system-query
 
 COPY --chown=${USER_ID}:${GROUP_ID} requirements*.txt ./
