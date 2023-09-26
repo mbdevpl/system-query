@@ -38,6 +38,7 @@ RUN set -Eeuxo pipefail && \
     git \
     libudev1 \
     python3-dev \
+    python3-numpy \
     python3-pip \
     python3-venv \
     sudo && \
