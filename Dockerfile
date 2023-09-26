@@ -36,6 +36,7 @@ RUN set -Eeuxo pipefail && \
   apt-get update && \
   apt-get install --no-install-recommends -y \
     git \
+    libudev1 \
     python3-dev \
     python3-pip \
     python3-venv \
@@ -43,6 +44,13 @@ RUN set -Eeuxo pipefail && \
   apt-get -qy autoremove && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
+
+USER user
+
+RUN set -Eeuxo pipefail && \
+  mkdir -p ~/system-query ~/.local/{bin,lib,share}
+
+USER root
 
 WORKDIR /home/user/system-query
 

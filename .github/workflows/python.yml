@@ -24,6 +24,8 @@ jobs:
           architecture: x64
       - run: pip install -r requirements_ci.txt
       - run: python -m coverage run --branch --source . -m unittest -v
+      - if: matrix.os == 'ubuntu-latest'
+        run: sudo apt-get install -y libudev1
       - run: pip install -r requirements_all_github.txt
       - run: python -m coverage run --append --branch --source . -m unittest -v
       - run: python -m coverage report --show-missing
