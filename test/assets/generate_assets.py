@@ -10,6 +10,7 @@ import datetime
 import json
 import logging
 import pathlib
+import pprint
 import sys
 import typing as t
 
@@ -31,6 +32,8 @@ def prepare_test_assets():
     hostname = system_query.host_info.query_host()
     timestamp = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
 
+    if system_query.available_features.GPU:
+        prepare_gpu_test_data(_HERE / f'{hostname}_{timestamp}_gpu{{suffix}}_data.json')
     if system_query.available_features.HDD:
         prepare_hdd_test_data(_HERE / f'{hostname}_{timestamp}_hdd_data.json')
 
@@ -50,6 +53,28 @@ def make_value_json_serializable(value: t.Any):
             _LOG.debug('failed to decode value %s to string', value)
         return value.hex()
     return value
+
+
+GPU_DATA_PREFIX = '''import pycuda
+
+DATA = '''
+
+
+def prepare_gpu_test_data(filepath: pathlib.Path):
+    """Prepare GPU test data based on the current system."""
+    import pycuda.driver as cuda  # pylint: disable = import-outside-toplevel
+    import pycuda.autoinit  # pylint: disable = import-outside-toplevel, unused-import
+    cuda_device_dict = {}
+    for i in range(cuda.Device.count()):
+        cuda_device = cuda.Device(i)
+        cuda_device_dict[i] = str(cuda_device.name())
+        cuda_device_str = pprint.pformat(cuda_device.get_attributes(), indent=2, compact=False)
+        _LOG.info('storing data in "%s"', filepath)
+        with filepath.with_name(filepath.name.format(suffix=f'_{i}')).with_suffix('.py').open(
+                'w', encoding='utf-8') as cuda_device_file:
+            print(GPU_DATA_PREFIX, file=cuda_device_file)
+            print(cuda_device_str, file=cuda_device_file)
+    persist_dict(cuda_device_dict, filepath.with_name(filepath.name.format(suffix='')))
 
 
 def _get_all_hdd_device_attributes(device):
