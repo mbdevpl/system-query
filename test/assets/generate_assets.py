@@ -72,7 +72,7 @@ def prepare_gpu_test_data(filepath: pathlib.Path):
         _LOG.info('storing data in "%s"', filepath)
         with filepath.with_name(filepath.name.format(suffix=f'_{i}')).with_suffix('.py').open(
                 'w', encoding='utf-8') as cuda_device_file:
-            print(GPU_DATA_PREFIX, file=cuda_device_file)
+            print(GPU_DATA_PREFIX, end='', file=cuda_device_file)
             print(cuda_device_str, file=cuda_device_file)
     persist_dict(cuda_device_dict, filepath.with_name(filepath.name.format(suffix='')))
 
