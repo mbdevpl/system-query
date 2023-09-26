@@ -32,6 +32,8 @@ def prepare_test_assets():
     hostname = system_query.host_info.query_host()
     timestamp = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
 
+    if system_query.available_features.CPU:
+        prepare_cpu_test_data(_HERE / f'{hostname}_{timestamp}_cpu_data.json')
     if system_query.available_features.GPU:
         prepare_gpu_test_data(_HERE / f'{hostname}_{timestamp}_gpu{{suffix}}_data.json')
     if system_query.available_features.HDD:
@@ -54,6 +56,13 @@ def make_value_json_serializable(value: t.Any):
             _LOG.debug('failed to decode value %s to string', value)
         return value.hex()
     return value
+
+
+def prepare_cpu_test_data(filepath: pathlib.Path):
+    """Prepare CPU test data based on the current system."""
+    import cpuinfo  # pylint: disable = import-outside-toplevel
+    cpuinfo_dict = cpuinfo.get_cpu_info()
+    persist_dict(cpuinfo_dict, filepath)
 
 
 GPU_DATA_PREFIX = '''import pycuda
