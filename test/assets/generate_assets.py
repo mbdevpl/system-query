@@ -46,6 +46,7 @@ def persist_dict(dict_data: dict, filepath: pathlib.Path):
 
 
 def make_value_json_serializable(value: t.Any):
+    """Force a value to be serializable to JSON."""
     if isinstance(value, bytes):
         try:
             return value.decode()
@@ -63,7 +64,7 @@ DATA = '''
 def prepare_gpu_test_data(filepath: pathlib.Path):
     """Prepare GPU test data based on the current system."""
     import pycuda.driver as cuda  # pylint: disable = import-outside-toplevel
-    import pycuda.autoinit  # pylint: disable = import-outside-toplevel, unused-import
+    import pycuda.autoinit  # pylint: disable = import-outside-toplevel, unused-import  # noqa: F401
     cuda_device_dict = {}
     for i in range(cuda.Device.count()):
         cuda_device = cuda.Device(i)
