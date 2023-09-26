@@ -2,11 +2,15 @@
 
 import unittest
 
-from system_query.available_features import GPU, HDD
-from system_query import query_gpus, query_hdds
+from system_query.available_features import CPU, GPU, HDD
+from system_query import query_cpu, query_gpus, query_hdds
 
 
 class Tests(unittest.TestCase):
+
+    @unittest.skipUnless(CPU, 'querying CPU is not supported')
+    def test_cpu(self):
+        self.assertGreaterEqual(len(query_cpu()), 1)
 
     @unittest.skipUnless(GPU, 'querying GPUs is not supported')
     def test_gpus(self):
