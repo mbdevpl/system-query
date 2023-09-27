@@ -3,8 +3,8 @@
 import unittest
 import unittest.mock
 
-import system_query.available_features
 from system_query.available_features import CPU
+import system_query.cpu_info
 from system_query.cpu_info import query_cpu_clock, query_cpu_cores, _get_cache_size
 
 
@@ -42,10 +42,10 @@ class Tests(unittest.TestCase):
 
     @unittest.skipIf(not CPU, 'skipping CPU cache query')
     def test_query_cpu_clock_unsupported(self):
-        with unittest.mock.patch.object(system_query.available_features, 'CPU_CLOCK', False):
+        with unittest.mock.patch.object(system_query.cpu_info, 'CPU_CLOCK', False):
             self.assertEqual(query_cpu_clock(), (None, None, None))
 
     @unittest.skipIf(not CPU, 'skipping CPU cache query')
     def test_query_cpu_cores_unsupported(self):
-        with unittest.mock.patch.object(system_query.available_features, 'CPU_CORES', False):
+        with unittest.mock.patch.object(system_query.cpu_info, 'CPU_CORES', False):
             self.assertEqual(query_cpu_cores(), (None, None))
