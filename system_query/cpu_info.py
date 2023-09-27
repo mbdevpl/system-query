@@ -71,7 +71,7 @@ def query_cpu(**_) -> t.Mapping[str, t.Any]:
     logical_cores, physical_cores = query_cpu_cores()
     cache = _get_cache_sizes(cpu)
     return {
-        'brand': cpu.get('brand', None),
+        'brand': cpu.get('brand', cpu.get('brand_raw', None)),
         'logical_cores': logical_cores,
         'physical_cores': physical_cores,
         'clock': clock_current,
