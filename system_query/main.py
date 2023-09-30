@@ -5,7 +5,7 @@ import pathlib
 import sys
 
 from ._version import VERSION
-from .query import query_and_export
+from .query import QUERY_FUNCTIONS, query_and_export
 
 
 def main(args=None, namespace=None):
@@ -21,7 +21,7 @@ def main(args=None, namespace=None):
         https://github.com/mbdevpl/system-query''',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter, allow_abbrev=True)
     parser.add_argument(
-        '-s', '--scope', type=str, default='all', choices=['all', 'cpu', 'gpu', 'ram'],
+        '-s', '--scope', type=str, default='all', choices=list(QUERY_FUNCTIONS.keys()),
         help='''Scope of the query''')
     parser.add_argument(
         '-f', '--format', type=str, default='raw', choices=['raw', 'json'],
