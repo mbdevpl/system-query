@@ -10,6 +10,7 @@ from .all_info import query_all
 from .cpu_info import query_cpu
 from .gpu_info import query_gpus
 from .ram_info import query_ram
+from .swap_info import query_swap
 
 JSON_INDENT = 2
 
@@ -21,7 +22,7 @@ def query_and_export(query_scope: str, export_format: str, export_target: t.Any,
 
     Currently implemented values are:
 
-    - query_scope: all, cpu, gpu, ram.
+    - query_scope: all, cpu, gpu, ram, swap.
     - export_format: json, raw.
     - export_target: sys.stdout, sys.stderr, path.
     """
@@ -29,20 +30,22 @@ def query_and_export(query_scope: str, export_format: str, export_target: t.Any,
     export(info, export_format, export_target)
 
 
+QUERY_FUNCTIONS = {
+    'all': query_all,
+    'cpu': query_cpu,
+    'gpu': query_gpus,
+    'ram': query_ram,
+    'swap': query_swap,
+}
+
+
 def query(query_scope: str, **kwargs) -> t.Any:
     """Wrap around selected system query functions."""
-    info: t.Any
-    if query_scope == 'all':
-        info = query_all(**kwargs)
-    elif query_scope == 'cpu':
-        info = query_cpu(**kwargs)
-    elif query_scope == 'gpu':
-        info = query_gpus(**kwargs)
-    elif query_scope == 'ram':
-        info = query_ram(**kwargs)
-    else:
-        raise NotImplementedError(f'scope={query_scope}')
-    return info
+    try:
+        query_function = QUERY_FUNCTIONS[query_scope]
+    except KeyError as err:
+        raise NotImplementedError(f'scope={query_scope}') from err
+    return query_function(**kwargs)  # type: ignore
 
 
 def export(info, export_format: str, export_target: t.Any):
