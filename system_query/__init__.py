@@ -2,7 +2,7 @@
 
 __all__ = [
     'query_all', 'query_cpu', 'query_gpus', 'query_hdds', 'query_ram', 'query_software',
-    'query_and_export']
+    'query_swap', 'query_and_export']
 
 from .all_info import query_all
 from .cpu_info import query_cpu
@@ -12,5 +12,5 @@ from .hdd_info import query_hdds
 # from .os_info import query_os
 from .ram_info import query_ram
 from .software_info import query_software
-# from .swap_info import query_swap
+from .swap_info import query_swap
 from .query import query_and_export
