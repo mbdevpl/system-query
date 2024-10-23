@@ -73,8 +73,8 @@ Using
 Installing *system-query* doesn't enable all the features by default. Some of the query functions
 will work only on **some** systems. To attempt installation with all features enables,
 run :bash:`pip3 install system-query[all]`. If something brakes, you can narrow down the features
-by typing a feature scope instead of :bash:`all`.
-You can choose from :bash:`cpu`, :bash:`gpu`, :bash:`hdd`, :bash:`ram` and :bash:`swap`.
+by typing a feature scope instead of ``all``.
+You can choose from ``cpu``, ``gpu``, ``hdd``, ``ram`` and ``swap``.
 E.g. :bash:`pip3 install system-query[gpu]`. You can also select more than one feature
 at the same time, e.g. :bash:`pip3 install system-query[cpu,hdd,ram]`.
 
@@ -140,13 +140,18 @@ assuming their executables are in system path.
 system_query.query_swap()
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To be able to see amount of swap space, install Python package :bash:`psutil`.
+To be able to see amount of swap space, install Python package ``psutil``.
+
+.. code:: python
+
+    In [9]: system_query.query_swap()
+    Out[9]: {'total': 0}
 
 
 As command-line tool
 --------------------
 
-For example:
+Below will run :python:`system_query.query_all()` and output results to stdout:
 
 .. code:: bash
 
@@ -161,15 +166,15 @@ For example:
      'host': 'TestMachine',
      'os': 'Linux-4.4.0-109-generic-x86_64-with-debian-stretch-sid',
      'ram': {'total': 33701269504},
-     'swap': 0}
+     'swap': {'total': 0}}
 
-Usage information:
+Please use ``-h`` to see usage information:
 
 .. code::
 
     $ python3 -m system_query -h
-    usage: system_query [-h] [-s {all,cpu,gpu,ram}] [-f {raw,json}] [-t TARGET]
-                        [--version]
+    usage: system_query [-h] [-s {all,cpu,gpu,ram,swap}] [-f {raw,json}]
+                        [-t TARGET] [--version]
 
     Comprehensive and concise system information tool. Query a given hardware
     and/or software scope of your system and get results in human- and machine-
@@ -177,7 +182,7 @@ Usage information:
 
     optional arguments:
       -h, --help            show this help message and exit
-      -s {all,cpu,gpu,ram}, --scope {all,cpu,gpu,ram}
+      -s {all,cpu,gpu,ram,swap}, --scope {all,cpu,gpu,ram,swap}
                             Scope of the query (default: all)
       -f {raw,json}, --format {raw,json}
                             Format of the results of the query. (default: raw)
@@ -187,6 +192,8 @@ Usage information:
                             stdout and stderr, respectively. (default: stdout)
       --version             show program's version number and exit
 
+    Copyright 2017-2023 by the contributors, Apache License 2.0,
+    https://github.com/mbdevpl/system-query
 
 Requirements
 ============
