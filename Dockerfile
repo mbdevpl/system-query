@@ -41,6 +41,7 @@ RUN set -Eeuxo pipefail && \
     python3-numpy \
     python3-pip \
     python3-venv \
+    shellcheck \
     sudo && \
   apt-get -qy autoremove && \
   apt-get clean && \
