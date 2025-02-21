@@ -25,6 +25,7 @@ pipeline {
     stage('Lint') {
       environment {
         PYTHON_MODULES = "${env.PYTHON_PACKAGE} test *.py"
+        SHELL_SCRIPTS = '*.sh'
       }
       steps {
         sh """#!/usr/bin/env bash
@@ -37,6 +38,8 @@ pipeline {
           echo "\${PIPESTATUS[0]}" | tee flake518_status.log
           python3 -m pydocstyle ${PYTHON_MODULES} |& tee pydocstyle.log
           echo "\${PIPESTATUS[0]}" | tee pydocstyle_status.log
+          shellcheck ${SHELL_SCRIPTS} |& tee shellcheck.log
+          echo "\${PIPESTATUS[0]}" | tee shellcheck_status.log
         """
       }
     }
@@ -61,7 +64,11 @@ pipeline {
           echo "${PIPESTATUS[0]}" | tee coverage_status.log
         '''
         script {
-          defaultHandlers.afterPythonBuild()
+          if (env.CHANGE_ID) {
+            HashMap toolResults = pythonUtils.prepareLintingReport()
+            toolResults['shellcheck'] = languageUtils.prepareToolReport('shellcheck')
+            repoUtils.postToolsReportOnPR(toolResults)
+          }
         }
       }
     }
