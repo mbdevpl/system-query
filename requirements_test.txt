@@ -1,2 +1,2 @@
 -r requirements.txt
-boilerplates[packaging_tests] ~= 1.0
+boilerplates[packaging-tests] ~= 1.0
