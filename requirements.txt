@@ -1,2 +1,2 @@
-boilerplates[logging] ~= 1.0
+boilerplates[logging] ~= 1.2
 version-query ~= 1.5
