@@ -1,6 +1,8 @@
 [build-system]
+build-backend = 'setuptools.build_meta'
 requires = [
-    'boilerplates[setup] ~= 1.0'
+    'boilerplates[setup] ~= 1.2',
+    'version-query ~= 1.6'
 ]
 
 [tool.flake8]
