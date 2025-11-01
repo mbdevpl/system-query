@@ -4,6 +4,6 @@ coverage ~= 7.2
 flake518 ~= 1.6
 mypy ~= 2.1
 pydocstyle ~= 6.3
-pylint ~= 3.3
+pylint ~= 4.0
 twine ~= 6.1
 types-psutil ~= 7.0
