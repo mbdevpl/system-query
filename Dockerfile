@@ -25,10 +25,12 @@ ARG GROUP_ID=1000
 ARG AUX_GROUP_IDS=""
 
 RUN set -Eeuxo pipefail && \
-  (addgroup --gid "${GROUP_ID}" user || echo "group ${GROUP_ID} already exists, so not adding it") && \
-  adduser --disabled-password --gecos "User" --uid "${USER_ID}" --gid "${GROUP_ID}" user && \
+  if id "${USER_ID}" >/dev/null 2>&1; then deluser $(id -un "${USER_ID}"); fi && \
+  if getent group "${GROUP_ID}" >/dev/null 2>&1; then delgroup $(getent group "${GROUP_ID}" | cut -d: -f1); fi && \
+  addgroup --gid "${GROUP_ID}" "user" && \
+  adduser --disabled-password --gecos "User" --uid "${USER_ID}" --gid "${GROUP_ID}" "user" && \
   echo ${AUX_GROUP_IDS} | xargs -n1 echo | xargs -I% addgroup --gid % group% && \
-  echo ${AUX_GROUP_IDS} | xargs -n1 echo | xargs -I% usermod --append --groups group% user
+  echo ${AUX_GROUP_IDS} | xargs -n1 echo | xargs -I% usermod --append --groups group% "user"
 
 # install dependencies
 
