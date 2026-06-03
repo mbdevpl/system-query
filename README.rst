@@ -337,7 +337,7 @@ Please use ``-h`` to see usage information:
 Requirements
 ============
 
-Python version 3.9 or later.
+Python version 3.11 or later.
 
 Python libraries as specified in `<requirements.txt>`_.
 Recommended (but optional) packages are listed in `<requirements_optional.txt>`_.
