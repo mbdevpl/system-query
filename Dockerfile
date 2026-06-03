@@ -60,10 +60,16 @@ WORKDIR /home/user/system-query
 
 COPY --chown=${USER_ID}:${GROUP_ID} requirements*.txt ./
 
+USER user
+
 RUN set -Eeuxo pipefail && \
+  python3 -m venv --prompt "$(basename ${PWD})" /home/user/venv && \
+  source /home/user/venv/bin/activate && \
   pip3 install --no-cache-dir -r requirements_ci.txt
 
 # add user to sudoers
+
+USER root
 
 RUN set -Eeuxo pipefail && \
   usermod --append --groups sudo user && \

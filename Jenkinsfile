@@ -30,6 +30,7 @@ pipeline {
       steps {
         sh """#!/usr/bin/env bash
           set -Eeux
+          source /home/user/venv/bin/activate
           python3 -m pylint ${PYTHON_MODULES} |& tee pylint.log
           echo "\${PIPESTATUS[0]}" | tee pylint_status.log
           python3 -m mypy ${PYTHON_MODULES} |& tee mypy.log
@@ -48,6 +49,7 @@ pipeline {
       steps {
         sh '''#!/usr/bin/env bash
           set -Eeuxo pipefail
+          source /home/user/venv/bin/activate
           python3 -m coverage run --branch --source . -m unittest -v
           pip3 install --no-cache-dir -r requirements_all.txt
           python3 -m coverage run --append --branch --source . -m unittest -v
@@ -60,6 +62,7 @@ pipeline {
       steps {
         sh '''#!/usr/bin/env bash
           set -Eeux
+          source /home/user/venv/bin/activate
           python3 -m coverage report --show-missing |& tee coverage.log
           echo "${PIPESTATUS[0]}" | tee coverage_status.log
         '''
@@ -80,6 +83,7 @@ pipeline {
       steps {
         sh '''#!/usr/bin/env bash
           set -Eeuxo pipefail
+          source /home/user/venv/bin/activate
           python3 -m codecov --token ${CODECOV_TOKEN}
         '''
       }
@@ -93,7 +97,7 @@ pipeline {
         }
       }
       environment {
-        VERSION = sh(script: 'python3 -m version_query --predict .', returnStdout: true).trim()
+        VERSION = sh(script: 'source /home/user/venv/bin/activate && python3 -m version_query --predict .', returnStdout: true).trim()
         PYPI_AUTH = credentials('mbdev-pypi-auth')
         TWINE_USERNAME = "${PYPI_AUTH_USR}"
         TWINE_PASSWORD = "${PYPI_AUTH_PSW}"
@@ -114,7 +118,7 @@ pipeline {
         buildingTag()
       }
       environment {
-        VERSION = sh(script: 'python3 -m version_query .', returnStdout: true).trim()
+        VERSION = sh(script: 'source /home/user/venv/bin/activate && python3 -m version_query .', returnStdout: true).trim()
       }
       steps {
         script {
