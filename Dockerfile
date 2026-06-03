@@ -12,8 +12,8 @@ RUN set -Eeuxo pipefail && \
   apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
     tzdata && \
-  echo "${TIMEZONE}" > /etc/timezone && \
-  cp "/usr/share/zoneinfo/${TIMEZONE}" /etc/localtime && \
+  echo "${TIMEZONE}" > "/etc/timezone" && \
+  ln -nfs "/usr/share/zoneinfo/${TIMEZONE}" "/etc/localtime" && \
   apt-get -qy autoremove && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
