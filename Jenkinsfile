@@ -97,7 +97,7 @@ pipeline {
         }
       }
       environment {
-        VERSION = sh(script: 'source /home/user/venv/bin/activate && python3 -m version_query --predict .', returnStdout: true).trim()
+        VERSION = sh(script: '. /home/user/venv/bin/activate && python3 -m version_query --predict .', returnStdout: true).trim()
         PYPI_AUTH = credentials('mbdev-pypi-auth')
         TWINE_USERNAME = "${PYPI_AUTH_USR}"
         TWINE_PASSWORD = "${PYPI_AUTH_PSW}"
@@ -118,7 +118,7 @@ pipeline {
         buildingTag()
       }
       environment {
-        VERSION = sh(script: 'source /home/user/venv/bin/activate && python3 -m version_query .', returnStdout: true).trim()
+        VERSION = sh(script: '. /home/user/venv/bin/activate && python3 -m version_query .', returnStdout: true).trim()
       }
       steps {
         script {
