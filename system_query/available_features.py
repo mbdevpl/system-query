@@ -28,7 +28,7 @@ except ImportError:
     psutil = None  # type: ignore
     _LOG.info("unable to import package psutil", exc_info=True)
 
-CPU_CLOCK = psutil is not None
+CPU_CLOCK = psutil is not None and hasattr(psutil, 'cpu_freq')
 CPU_CORES = psutil is not None
 
 _GPU_FAILED = False
