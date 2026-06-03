@@ -1,6 +1,6 @@
-ARG CUDA_VERSION="11.7.1"
+ARG CUDA_VERSION="13.2.1"
 
-FROM nvidia/cuda:${CUDA_VERSION}-devel-ubuntu22.04
+FROM nvidia/cuda:${CUDA_VERSION}-devel-ubuntu24.04
 
 SHELL ["/bin/bash", "-c"]
 
@@ -12,8 +12,8 @@ RUN set -Eeuxo pipefail && \
   apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
     tzdata && \
-  echo "${TIMEZONE}" > /etc/timezone && \
-  cp "/usr/share/zoneinfo/${TIMEZONE}" /etc/localtime && \
+  echo "${TIMEZONE}" > "/etc/timezone" && \
+  ln -nfs "/usr/share/zoneinfo/${TIMEZONE}" "/etc/localtime" && \
   apt-get -qy autoremove && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
@@ -25,10 +25,12 @@ ARG GROUP_ID=1000
 ARG AUX_GROUP_IDS=""
 
 RUN set -Eeuxo pipefail && \
-  (addgroup --gid "${GROUP_ID}" user || echo "group ${GROUP_ID} already exists, so not adding it") && \
-  adduser --disabled-password --gecos "User" --uid "${USER_ID}" --gid "${GROUP_ID}" user && \
+  if id "${USER_ID}" >/dev/null 2>&1; then deluser $(id -un "${USER_ID}"); fi && \
+  if getent group "${GROUP_ID}" >/dev/null 2>&1; then delgroup $(getent group "${GROUP_ID}" | cut -d: -f1); fi && \
+  addgroup --gid "${GROUP_ID}" "user" && \
+  adduser --disabled-password --gecos "User" --uid "${USER_ID}" --gid "${GROUP_ID}" "user" && \
   echo ${AUX_GROUP_IDS} | xargs -n1 echo | xargs -I% addgroup --gid % group% && \
-  echo ${AUX_GROUP_IDS} | xargs -n1 echo | xargs -I% usermod --append --groups group% user
+  echo ${AUX_GROUP_IDS} | xargs -n1 echo | xargs -I% usermod --append --groups group% "user"
 
 # install dependencies
 
@@ -58,10 +60,16 @@ WORKDIR /home/user/system-query
 
 COPY --chown=${USER_ID}:${GROUP_ID} requirements*.txt ./
 
+USER user
+
 RUN set -Eeuxo pipefail && \
+  python3 -m venv --prompt "$(basename ${PWD})" /home/user/venv && \
+  source /home/user/venv/bin/activate && \
   pip3 install --no-cache-dir -r requirements_ci.txt
 
 # add user to sudoers
+
+USER root
 
 RUN set -Eeuxo pipefail && \
   usermod --append --groups sudo user && \
