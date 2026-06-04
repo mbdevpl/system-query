@@ -106,6 +106,7 @@ pipeline {
       steps {
         sh """#!/usr/bin/env bash
           set -Eeuxo pipefail
+          source /home/user/venv/bin/activate
           python3 -m twine upload \
             dist/${PYTHON_PACKAGE}-${VERSION}-py3-none-any.whl \
             dist/${PYTHON_PACKAGE}-${VERSION}.tar.gz
